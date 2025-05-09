@@ -1,0 +1,48 @@
+import React, { useState } from "react";
+import "../css files/landingPage.css";
+// import "../css files/headerandfooter.css";
+
+import { Link } from "react-router-dom";
+
+export const Header = () => {
+  return (
+    <>
+      <header className="header">
+        <div className="header__logo">
+          {" "}
+          <img src="2paylogo.png" alt="" />
+        </div>
+
+        <div className="header__sections">
+          <h3>Home</h3>
+          <h3>Tiers</h3>
+          <h3>How it works</h3>
+          <h3>Contribute</h3>
+          <h3>FAQS</h3>
+        </div>
+
+        <div className="utils">
+          <img className="gear" src="setting-2.png" alt="" />
+
+          <select id="network" name="network">
+            <option value="">-- Select --</option>
+            <option value="apple">Apple</option>
+            <option value="banana">Banana</option>
+            <option value="mango">Mango</option>
+            <option value="orange">Orange</option>
+          </select>
+
+          <button className="btn blue">Connect Wallet</button>
+        </div>
+      </header>
+    </>
+  );
+};
+
+export const Footer = () => {
+  return (
+    <>
+      <footer className="footer"></footer>
+    </>
+  );
+};
