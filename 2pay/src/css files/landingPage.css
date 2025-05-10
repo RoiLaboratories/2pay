@@ -1,0 +1,9 @@
+body {
+  font-family: "Poppins";
+  /* width: 100%; */
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  background-color: #1e1e1e;
+  height: 3000px;
+}
