@@ -2,9 +2,10 @@
   border-bottom: 1px solid #ffffff40;
 }
 
-.hero__text--h1 {
+.hero__text--blue {
   color: #036de5;
   font-size: 40px;
+  margin: 0;
 }
 
 .hero__text {

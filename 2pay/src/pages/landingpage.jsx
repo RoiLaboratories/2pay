@@ -5,6 +5,7 @@ import Hero from "../components/hero";
 import Tierlist from "../components/tierlist";
 import Cards from "../components/cards";
 import Details from "../components/details";
+import Faqs from "../components/FAQs";
 
 const LandingPage = () => {
   return (
@@ -14,6 +15,7 @@ const LandingPage = () => {
       <Tierlist></Tierlist>
       <Cards howitworks="How it works" />
       <Details></Details>
+      <Faqs></Faqs>
     </>
   );
 };

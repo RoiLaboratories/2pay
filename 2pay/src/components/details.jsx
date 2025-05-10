@@ -11,7 +11,7 @@ const Details = () => {
       <div className="hero">
         <div>
           <div className="hero__text">
-            <h1 className="hero__text--h1"> Earn Big By Being First </h1>
+            <h1 className="hero__text--blue"> Earn Big By Being First </h1>
 
             <p className="hero__text--p">
               No waiting. No delays. Claim your reward, as soon as a pool hits 5
@@ -20,7 +20,7 @@ const Details = () => {
           </div>
 
           <div className="hero__text">
-            <h1 className="hero__text--h1"> Contributions Made Simple </h1>
+            <h1 className="hero__text--blue"> Contributions Made Simple </h1>
 
             <p className="hero__text--p">
               Join contribution pools and get rewarded instantly.
@@ -28,7 +28,7 @@ const Details = () => {
           </div>
 
           <div className="hero__text">
-            <h1 className="hero__text--h1"> On-Chain Stats </h1>
+            <h1 className="hero__text--blue"> On-Chain Stats </h1>
 
             <p className="hero__text--p">
               Track every pool in real time on the blockchain.{" "}
