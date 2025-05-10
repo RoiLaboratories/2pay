@@ -1,8 +1,21 @@
+.hero {
+  border-bottom: 1px solid #ffffff40;
+}
+
 .hero__text--h1 {
   color: #036de5;
   font-size: 40px;
 }
 
-.hero {
-  /* flex-direction: column; */
+.hero__text {
+  width: 100%;
+}
+
+.hero__image2 {
+  width: 50%;
+}
+
+.hero__image2 img {
+  width: 100%;
+  object-fit: fill;
 }
