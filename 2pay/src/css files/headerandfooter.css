@@ -60,3 +60,20 @@ header {
   font-size: 12px;
   font-weight: bold;
 }
+
+footer {
+  display: flex;
+  height: 69px;
+  width: 100%;
+  background-color: #1a1a1a;
+  justify-content: center;
+  align-items: center;
+  color: #5e5b5b;
+  position: relative;
+}
+
+footer img {
+  height: 20px;
+  position: absolute;
+  right: 40px;
+}

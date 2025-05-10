@@ -36,7 +36,11 @@ export const Header = () => {
 export const Footer = () => {
   return (
     <>
-      <footer className="footer"></footer>
+      <footer className="footer">
+        {" "}
+        <div> Copyright &copy; 2025, 2Pay</div>{" "}
+        <img src="Frame 237.png" alt="" />
+      </footer>
     </>
   );
 };
