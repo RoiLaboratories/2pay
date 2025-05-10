@@ -6,4 +6,5 @@ body {
   box-sizing: border-box;
   background-color: #1e1e1e;
   height: 3000px;
+  position: relative;
 }

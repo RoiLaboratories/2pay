@@ -1,7 +1,7 @@
 .faqs__cards {
   overflow-x: scroll;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   padding: 4px;
   scroll-behavior: smooth;
 }
@@ -11,7 +11,7 @@
 }
 
 .horizontal-scroll::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera */
+  display: none;
 }
 
 .card__heading {
