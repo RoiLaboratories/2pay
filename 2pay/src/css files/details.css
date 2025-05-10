@@ -1,0 +1,8 @@
+.hero__text--h1 {
+  color: #036de5;
+  font-size: 40px;
+}
+
+.hero {
+  /* flex-direction: column; */
+}

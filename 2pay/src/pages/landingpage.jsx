@@ -4,6 +4,7 @@ import { Header, Footer } from "../components/headerandfooter";
 import Hero from "../components/hero";
 import Tierlist from "../components/tierlist";
 import Cards from "../components/cards";
+import Details from "../components/details";
 
 const LandingPage = () => {
   return (
@@ -12,6 +13,7 @@ const LandingPage = () => {
       <Hero></Hero>
       <Tierlist></Tierlist>
       <Cards howitworks="How it works" />
+      <Details></Details>
     </>
   );
 };
