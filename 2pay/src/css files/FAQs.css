@@ -1,7 +1,5 @@
 .faqs__cards {
   overflow-x: scroll;
-  /* width: 100%; */
-  /* Hide scrollbar - cross-browser */
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE and Edge */
   padding: 4px;
@@ -20,7 +18,7 @@
   text-align: center;
 }
 
-.faqs {
+.cards__div.faqs {
   border-bottom: 1px solid #ffffff40;
   margin-bottom: 150px;
 }

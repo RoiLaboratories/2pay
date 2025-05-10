@@ -16,6 +16,7 @@ const LandingPage = () => {
       <Cards howitworks="How it works" />
       <Details></Details>
       <Faqs></Faqs>
+      <Footer></Footer>
     </>
   );
 };
