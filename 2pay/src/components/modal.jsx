@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "../css files/landingPage.css";
-import "../css files/modal.css";
+import "../css-files/landingPage.css";
+import "../css-files/modal.css";
 
 const Modal = ({ isOpen, onClose, onConfirm }) => {
   if (!isOpen) return null;
