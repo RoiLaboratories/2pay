@@ -1,0 +1,24 @@
+.faqs__cards {
+  overflow-x: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: 4px;
+  scroll-behavior: smooth;
+}
+
+.faqs__cards div {
+  width: 400px;
+}
+
+.horizontal-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.card__heading {
+  text-align: center;
+}
+
+.cards__div.faqs {
+  border-bottom: 1px solid #ffffff40;
+  margin-bottom: 150px;
+}
