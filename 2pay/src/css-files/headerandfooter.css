@@ -59,6 +59,12 @@ header {
   color: #ffffff;
   font-size: 12px;
   font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn.blue:hover {
+  background-color: #034184;
 }
 
 footer {
