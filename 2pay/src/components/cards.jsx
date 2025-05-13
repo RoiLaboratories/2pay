@@ -122,7 +122,7 @@ const Cards = ({ howitworks }) => {
           </div>
         </div>
 
-        <div className="stats">
+        {/* <div className="stats">
           <div className="stats__value">
             <div className="stats__value--number">18.745k</div>
             <div className="stats__value--description">Total Contributors</div>
@@ -141,7 +141,7 @@ const Cards = ({ howitworks }) => {
             <div className="stats__value--number">92k</div>
             <div className="stats__value--description">Active Pools</div>
           </div>{" "}
-        </div>
+        </div> */}
       </div>
     </>
   );
