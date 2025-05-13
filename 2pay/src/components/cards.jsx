@@ -75,7 +75,12 @@ const Cards = ({ howitworks }) => {
             <p className="card__body">
               <div className="currency">USDC</div>
               <div className="price__value">$50</div>
-              <button className="btn blue contribute__btn">Contribute</button>
+              <button
+                className="btn blue contribute__btn"
+                onClick={openModal()}
+              >
+                Contribute
+              </button>
             </p>
           </div>
 
