@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import "../css files/landingPage.css";
-import "../css files/cards.css";
-import "../css files/FAQs.css";
+import "../css-files/landingPage.css";
+import "../css-files/cards.css";
+import "../css-files/FAQs.css";
 import { Link } from "react-router-dom";
 
 const Faqs = () => {

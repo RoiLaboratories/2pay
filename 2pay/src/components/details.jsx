@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import "../css files/landingPage.css";
-import "../css files/hero.css";
-import "../css files/details.css";
+import "../css-files/landingPage.css";
+import "../css-files/hero.css";
+import "../css-files/details.css";
 
 import { Link } from "react-router-dom";
 

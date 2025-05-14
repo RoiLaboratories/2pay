@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import "../css files/landingPage.css";
-import "../css files/headerandfooter.css";
+import "../css-files/landingPage.css";
+import "../css-files/headerandfooter.css";
 
 import { Link } from "react-router-dom";
 

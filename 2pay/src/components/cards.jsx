@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import "../css files/landingPage.css";
-import "../css files/cards.css";
+import "../css-files/landingPage.css";
+import "../css-files/cards.css";
 import { Link } from "react-router-dom";
 
 const Cards = ({ howitworks }) => {
@@ -79,7 +79,12 @@ const Cards = ({ howitworks }) => {
             <p className="card__body">
               <div className="currency">USDC</div>
               <div className="price__value">$50</div>
-              <button className="btn blue contribute__btn">Contribute</button>
+              <button
+                className="btn blue contribute__btn"
+                onClick={openModal()}
+              >
+                Contribute
+              </button>
             </p>
           </div>
 
@@ -126,7 +131,7 @@ const Cards = ({ howitworks }) => {
           </div>
         </div>
 
-        <div className="stats">
+        {/* <div className="stats">
           <div className="stats__value">
             <div className="stats__value--number">18.745k</div>
             <div className="stats__value--description">Total Contributors</div>
@@ -145,7 +150,7 @@ const Cards = ({ howitworks }) => {
             <div className="stats__value--number">92k</div>
             <div className="stats__value--description">Active Pools</div>
           </div>{" "}
-        </div>
+        </div> */}
       </div>
     </>
   );
