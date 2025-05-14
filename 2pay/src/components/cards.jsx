@@ -26,6 +26,8 @@ const Cards = ({ howitworks }) => {
 
   const getProgressWidth = (step) => `${(step / 5) * 100}%`;
 
+  const openModal = () => {};
+
   return (
     <>
       <div className="cards__div">
