@@ -24,7 +24,6 @@ header {
 .header__sections {
   display: flex;
   gap: 20px;
-  width: 568px;
 }
 
 .header__sections h3 {
@@ -61,6 +60,8 @@ header {
   font-weight: bold;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  font-family: "Poppins";
+  border-radius: 10px;
 }
 
 .btn.blue:hover {

@@ -18,7 +18,7 @@ const LandingPage = () => {
       <Details></Details>
       <Faqs></Faqs>
       <Footer></Footer>
-      <Modal></Modal>
+      {/* <Modal></Modal> */}
     </>
   );
 };

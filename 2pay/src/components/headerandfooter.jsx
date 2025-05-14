@@ -8,19 +8,17 @@ export const Header = () => {
   return (
     <>
       <header className="header">
-        <div className="logoandsection">
-          <div className="header__logo">
-            {" "}
-            <img src="2paylogo.png" alt="" />
-          </div>
+        <div className="header__logo">
+          {" "}
+          <img src="2paylogo.png" alt="" />
+        </div>
 
-          <div className="header__sections">
-            <h3>Home</h3>
-            <h3>Tiers</h3>
-            <h3>How it works</h3>
-            <h3>Contribute</h3>
-            <h3>FAQS</h3>
-          </div>
+        <div className="header__sections">
+          <h3>Home</h3>
+          <h3>Tiers</h3>
+          <h3>How it works</h3>
+          <h3>Contribute</h3>
+          <h3>FAQS</h3>
         </div>
 
         <div className="utils">

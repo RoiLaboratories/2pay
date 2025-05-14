@@ -2,11 +2,14 @@ import React, { useState } from "react";
 import "../css-files/landingPage.css";
 import "../css-files/cards.css";
 import { Link } from "react-router-dom";
+import "../css-files/modal.css";
 
 const Cards = ({ howitworks }) => {
   const [stepTier1, setStepTier1] = useState(0);
   const [stepTier2, setStepTier2] = useState(0);
   const [stepTier3, setStepTier3] = useState(0);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedPrice, setSelectedPrice] = useState(null);
 
   const addStep = (tier) => {
     switch (tier) {
@@ -26,10 +29,68 @@ const Cards = ({ howitworks }) => {
 
   const getProgressWidth = (step) => `${(step / 5) * 100}%`;
 
-  const openModal = () => {};
+  const openModal = (price) => {
+    setSelectedPrice(price);
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+    setSelectedPrice(null);
+  };
 
   return (
     <>
+      <div
+        className={`${modalOpen ? "open" : ""} modal-overlay`}
+        onClick={closeModal}
+        style={{ display: modalOpen ? "flex" : "none" }}
+      >
+        <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+          <h2 className="modal-title">Contribute</h2>
+
+          <div className="modal-box">
+            <div className="modal-box-left">
+              <div className="pay-section">
+                <div className="label">Pay</div>
+                <div className="pay-amount">
+                  <span className="usdc-icon">💲</span>
+                  <div>
+                    <strong>{selectedPrice} USDC</strong>
+                    <div className="subtext">${selectedPrice}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="modal-box-right">
+              <div className="label">Address</div>
+              <div className="address-box">0x80eb...fb8e</div>
+            </div>
+          </div>
+
+          <div className="modal-summary">
+            <div className="row">
+              <span>Network fee</span>
+              <span>
+                &lt;0.01 <span className="eth-icon">🧿</span> ETH
+              </span>
+            </div>
+            <div className="row">
+              <span>Total</span>
+              <span>${selectedPrice}</span>
+            </div>
+          </div>
+
+          <div className="modal-buttons">
+            <button className="cancel-btn" onClick={closeModal}>
+              Cancel
+            </button>
+            <button className="confirm-btn">Confirm</button>
+          </div>
+        </div>
+      </div>
+
       <div className="cards__div">
         <div className="mainheading">
           <h1>{howitworks}</h1>
@@ -79,7 +140,7 @@ const Cards = ({ howitworks }) => {
               <div className="price__value">$50</div>
               <button
                 className="btn blue contribute__btn"
-                onClick={openModal()}
+                onClick={() => openModal(50)}
               >
                 Contribute
               </button>
@@ -103,7 +164,12 @@ const Cards = ({ howitworks }) => {
             <p className="card__body">
               <div className="currency">USDC</div>
               <div className="price__value">$200</div>
-              <button className="btn blue contribute__btn">Contribute</button>
+              <button
+                className="btn blue contribute__btn"
+                onClick={() => openModal(200)}
+              >
+                Contribute
+              </button>
             </p>
           </div>
 
@@ -124,31 +190,15 @@ const Cards = ({ howitworks }) => {
             <p className="card__body">
               <div className="currency">USDC</div>
               <div className="price__value">$500</div>
-              <button className="btn blue contribute__btn">Contribute</button>
+              <button
+                className="btn blue contribute__btn"
+                onClick={() => openModal(500)}
+              >
+                Contribute
+              </button>
             </p>
           </div>
         </div>
-
-        {/* <div className="stats">
-          <div className="stats__value">
-            <div className="stats__value--number">18.745k</div>
-            <div className="stats__value--description">Total Contributors</div>
-          </div>
-          <div className="stats__value">
-            <div className="stats__value--number">$432k</div>
-            <div className="stats__value--description">
-              Total USDC Processed
-            </div>
-          </div>{" "}
-          <div className="stats__value">
-            <div className="stats__value--number">$164k</div>
-            <div className="stats__value--description">Payouts Made</div>
-          </div>{" "}
-          <div className="stats__value">
-            <div className="stats__value--number">92k</div>
-            <div className="stats__value--description">Active Pools</div>
-          </div>{" "}
-        </div> */}
       </div>
     </>
   );
