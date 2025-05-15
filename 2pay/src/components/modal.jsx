@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "../css-files/landingPage.css";
-import "../css-files/modal.css";
+import Cards from "./cards";
 
-const Modal = ({ isOpen, onClose, onConfirm }) => {
-  if (!isOpen) return null;
+const Modal = ({ onClose, onConfirm }) => {
+  const [modalOpen, setModalOpen] = useState(false);
 
   return (
     <div className="modal-overlay">
@@ -45,12 +45,8 @@ const Modal = ({ isOpen, onClose, onConfirm }) => {
         </div>
 
         <div className="modal-buttons">
-          <button className="cancel-btn" onClick={onClose}>
-            Cancel
-          </button>
-          <button className="confirm-btn" onClick={onConfirm}>
-            Confirm
-          </button>
+          <button className="cancel-btn">Cancel</button>
+          <button className="confirm-btn">Confirm</button>
         </div>
       </div>
     </div>

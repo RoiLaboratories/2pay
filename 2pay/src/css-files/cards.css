@@ -110,6 +110,8 @@
 .btn.blue.contribute__btn {
   width: 100%;
   border-radius: 6px;
+  font-family: "Poppins";
+  border-radius: 10px;
 }
 
 .stats {
