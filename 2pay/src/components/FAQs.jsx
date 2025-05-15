@@ -31,6 +31,27 @@ const Faqs = () => {
             typically irreversible. Contact our support team for guidance{" "}
           </p>
         </div>
+        <div className="card-3 box card">
+          <div className="card__heading">Can I cancel my contribution?</div>
+          <p className="card__body">
+            Due to the nature of blockchain transactions, contributions are
+            typically irreversible. Contact our support team for guidance{" "}
+          </p>
+        </div>
+        <div className="card-3 box card">
+          <div className="card__heading">Can I cancel my contribution?</div>
+          <p className="card__body">
+            Due to the nature of blockchain transactions, contributions are
+            typically irreversible. Contact our support team for guidance{" "}
+          </p>
+        </div>
+        <div className="card-3 box card">
+          <div className="card__heading">Can I cancel my contribution?</div>
+          <p className="card__body">
+            Due to the nature of blockchain transactions, contributions are
+            typically irreversible. Contact our support team for guidance{" "}
+          </p>
+        </div>
       </div>
     </div>
   );
