@@ -14,10 +14,10 @@ const Tierlist = () => {
           </div>
 
           <div className="box__body">
-            <p>$50 Contribution</p>
+            <p>$10 Contribution</p>
             <p>5 Total Contributors </p>
-            <p>First Gets: $100</p>
-            <p>Platform Gets: $100</p>
+            <p>First Gets: $30</p>
+            <p>Platform Gets: $20</p>
             <p> Pool Fills Fast</p>
           </div>
 
@@ -30,10 +30,10 @@ const Tierlist = () => {
           </div>
 
           <div className="box__body">
-            <p>$200 Contribution</p>
+            <p>$50 Contribution</p>
             <p>5 Total Contributors </p>
-            <p>First Gets: $400</p>
-            <p>Platform Gets: $400</p>
+            <p>First Gets: $150</p>
+            <p>Platform Gets: $100</p>
             <p>Balanced Growth</p>
           </div>
 
@@ -46,10 +46,10 @@ const Tierlist = () => {
           </div>
 
           <div className="box__body">
-            <p>$50 Contribution</p>
+            <p>$500 Contribution</p>
             <p>5 Total Contributors </p>
-            <p>First Gets: $100</p>
-            <p>Platform Gets: $100</p>
+            <p>First Gets: $1500</p>
+            <p>Platform Gets: $1000</p>
             <p> Pool Fills Fast</p>
           </div>
 
