@@ -84,3 +84,46 @@ footer img {
   position: absolute;
   right: 40px;
 }
+
+a {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.header__modal {
+  background-color: #1a1a1a;
+  box-sizing: border-box;
+  padding: 16px 48px;
+  border-radius: 12px;
+  position: absolute;
+  top: 96px;
+  right: 24px;
+  visibility: hidden;
+  overflow-y: scroll;
+  height: 400px;
+}
+
+.header__modal.open {
+  visibility: visible;
+}
+
+.wallet {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 0 20px;
+  cursor: pointer;
+  transition: color 0.5s ease;
+}
+
+.wallet:hover {
+  color: #036de5;
+}
+
+.wallet h5 {
+  margin: 10px 0;
+}
+
+h6 {
+  margin-bottom: 0;
+}

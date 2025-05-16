@@ -8,3 +8,7 @@ body {
   height: 3000px;
   position: relative;
 }
+
+html {
+  scroll-behavior: smooth;
+}

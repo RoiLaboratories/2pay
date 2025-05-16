@@ -116,7 +116,7 @@ const Cards = ({ howitworks }) => {
         </div>
       </div>
 
-      <div className="contribute__div">
+      <div className="contribute__div" id="contribute">
         <div className="mainheading">
           <h1>Contribute</h1>
         </div>
