@@ -22,3 +22,33 @@
   border-bottom: 1px solid #ffffff40;
   margin-bottom: 150px;
 }
+
+.faqs__scroll-container {
+  position: relative;
+}
+
+.scroll-arrow {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  font-size: 2rem;
+  background-color: #111;
+  color: white;
+  cursor: pointer;
+  width: 80px;
+  height: 80px;
+  z-index: 2;
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+  transition: background-color 0.3s ease;
+  border: 1px solid #ffffff40;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.scroll-arrow:hover {
+  background-color: #222;
+}

@@ -11,14 +11,28 @@ import Modal from "../components/modal";
 const LandingPage = () => {
   return (
     <>
-      <Header></Header>
-      <Hero></Hero>
-      <Tierlist></Tierlist>
-      <Cards howitworks="How it works" />
-      <Details></Details>
-      <Faqs></Faqs>
-      <Footer></Footer>
-      {/* <Modal></Modal> */}
+      <Header />
+
+      <div id="home">
+        <Hero />
+      </div>
+
+      <div id="tiers">
+        <Tierlist />
+      </div>
+
+      <div id="how-it-works">
+        <Cards howitworks="How it works" />
+      </div>
+
+      <Details />
+
+      <div id="faqs">
+        <Faqs />
+      </div>
+
+      <Footer />
+      {/* <Modal /> */}
     </>
   );
 };
