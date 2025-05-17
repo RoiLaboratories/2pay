@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import "../css-files/landingPage.css";
 import "../css-files/headerandfooter.css";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 
 import { Link } from "react-router-dom";
 
 export const Header = () => {
   const [modalWalletOpen, setModalWalletOpen] = useState(false);
   const [selectedWallet, setSelectedWallet] = useState(null);
+  const [disconnectWallet, setDisconnectWallet] = useState(false);
 
   const toggleWalletModal = () => {
     setModalWalletOpen(!modalWalletOpen);
@@ -24,6 +26,11 @@ export const Header = () => {
     coinbase: "💼",
     roi: "💨",
     walletconnect: "👛",
+  };
+
+  const toggleDscntWallet = () => {
+    setDisconnectWallet(!disconnectWallet);
+    console.log(disconnectWallet);
   };
 
   return (
@@ -53,7 +60,29 @@ export const Header = () => {
         </div>
 
         <div className="utils">
-          <img className="gear" src="setting-2.png" alt="" />
+          <img
+            className="gear"
+            src="setting-2.png"
+            alt=""
+            onClick={() => {
+              if (selectedWallet) {
+                toggleDscntWallet();
+              }
+            }}
+          />
+
+          <div
+            className={`${
+              disconnectWallet ? "openmodal" : ""
+            } discnt-wlt-modal`}
+            onClick={() => {
+              setSelectedWallet(null);
+              setDisconnectWallet(false);
+            }}
+          >
+            <ExitToAppIcon></ExitToAppIcon>
+            Disconnect Wallet
+          </div>
 
           <div className="selected-wallet">{walletEmojis[selectedWallet]}</div>
 
@@ -63,7 +92,6 @@ export const Header = () => {
         </div>
 
         <div className={`${modalWalletOpen ? "open" : ""} header__modal`}>
-          {console.log(modalWalletOpen)}
           <h3 className="header__modal--heading">Connect Wallet</h3>
           <div className="header__modal--installed">
             <h6>Installed</h6>
