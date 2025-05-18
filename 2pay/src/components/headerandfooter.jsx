@@ -6,6 +6,7 @@ import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import { Link } from "react-router-dom";
 
 export const Header = () => {
+  const [selectedSections, setSelectedSections] = useState(null);
   const [modalWalletOpen, setModalWalletOpen] = useState(false);
   const [selectedWallet, setSelectedWallet] = useState(null);
   const [disconnectWallet, setDisconnectWallet] = useState(false);
@@ -42,19 +43,50 @@ export const Header = () => {
         </div>
 
         <div className="header__sections">
-          <a href="#home">
+          <a
+            href="#home"
+            onClick={() => setSelectedSections("home")}
+            style={{
+              color: selectedSections === "home" ? "#036de5" : "#ffffff",
+            }}
+          >
             <h3>Home</h3>
           </a>
-          <a href="#tiers">
+          <a
+            href="#tiers"
+            onClick={() => setSelectedSections("tiers")}
+            style={{
+              color: selectedSections === "tiers" ? "#036de5" : "#ffffff",
+            }}
+          >
             <h3>Tiers</h3>
           </a>
-          <a href="#how-it-works">
+          <a
+            href="#how-it-works"
+            onClick={() => setSelectedSections("how-it-works")}
+            style={{
+              color:
+                selectedSections === "how-it-works" ? "#036de5" : "#ffffff",
+            }}
+          >
             <h3>How it works</h3>
           </a>
-          <a href="#contribute">
+          <a
+            href="#contribute"
+            onClick={() => setSelectedSections("contribute")}
+            style={{
+              color: selectedSections === "contribute" ? "#036de5" : "#ffffff",
+            }}
+          >
             <h3>Contribute</h3>
           </a>
-          <a href="#faqs">
+          <a
+            href="#faqs"
+            onClick={() => setSelectedSections("faqs")}
+            style={{
+              color: selectedSections === "faqs" ? "#036de5" : "#ffffff",
+            }}
+          >
             <h3>FAQs</h3>
           </a>
         </div>
