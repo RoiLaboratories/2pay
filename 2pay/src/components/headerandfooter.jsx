@@ -202,7 +202,22 @@ export const Footer = () => {
       <footer className="footer">
         {" "}
         <div> Copyright &copy; 2025, 2Pay</div>{" "}
-        <img src="Frame 237.png" alt="" />
+        <div className="socials">
+          <a href="https://x.com/2paypool?s=21&t=zHzGDr4e_VCU86KYiKvL6g">
+            {" "}
+            <img src="/socials/Vector (2).png" alt="X" />
+          </a>
+
+          <a href="https://t.me/+dmGC8f7w_XU4MTA0">
+            {" "}
+            <img src="/socials/Vector-1.png" alt="" />
+          </a>
+
+          <a href="https://youtube.com/@2paypool?si=P2Yi3ICiSwNJor6B">
+            {" "}
+            <img src="/socials/Vector-2.png" alt="" />
+          </a>
+        </div>
       </footer>
     </>
   );
