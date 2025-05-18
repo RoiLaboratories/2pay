@@ -104,20 +104,13 @@ a {
   height: 400px;
 }
 
-/* .header__modal::-webkit-scrollbar {
+.header__modal::-webkit-scrollbar {
   height: 8px;
 }
 
 .header__modal::-webkit-scrollbar-track {
-  background: #1a1a1a; 
+  background: #1a1a1a;
 }
-
-.header__modal::-webkit-scrollbar-thumb {
-  background-color: #888; 
-  border-radius: 8px;
-  height: 10px;
-  width: 2px;
-} */
 
 .header__modal.open {
   visibility: visible;
@@ -142,6 +135,7 @@ a {
 
 h6 {
   margin-bottom: 0;
+  color: #036de5;
 }
 
 .discnt-wlt-modal {
