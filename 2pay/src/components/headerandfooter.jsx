@@ -21,12 +21,12 @@ export const Header = () => {
   };
 
   const walletEmojis = {
-    metamask: "🦊",
-    phantom: "👻",
-    nest: "🐦",
-    coinbase: "💼",
-    roi: "💨",
-    walletconnect: "👛",
+    metamask: "/wallets/image1.png",
+    phantom: "/wallets/image 3.png",
+    nest: "/wallets/image 4.png",
+    coinbase: "/wallets/image 2.png",
+    roi: "/wallets/roilogo.png",
+    walletconnect: "/wallets/image 6.png",
   };
 
   const toggleDscntWallet = () => {
@@ -38,8 +38,9 @@ export const Header = () => {
     <>
       <header className="header">
         <div className="header__logo">
-          {" "}
-          <img src="2paylogo.png" alt="" />
+          <a href="/">
+            <img src="2paylogo.png" alt="2Pay Logo" />
+          </a>
         </div>
 
         <div className="header__sections">
@@ -116,7 +117,11 @@ export const Header = () => {
             Disconnect Wallet
           </div>
 
-          <div className="selected-wallet">{walletEmojis[selectedWallet]}</div>
+          <div className="selected-wallet">
+            {selectedWallet && (
+              <img src={walletEmojis[selectedWallet]} alt="" />
+            )}
+          </div>
 
           <button className="btn blue" onClick={toggleWalletModal}>
             {(selectedWallet && "address") || "Connect Wallet"}
@@ -131,21 +136,27 @@ export const Header = () => {
               className="wallet"
               onClick={() => handleSelectedWallet("metamask")}
             >
-              <div className="wallet__icon">👜</div>
+              <div className="wallet__icon">
+                <img src="/wallets/image1.png" alt="" />
+              </div>
               <h5>MetaMask</h5>
             </div>
             <div
               className="wallet"
               onClick={() => handleSelectedWallet("phantom")}
             >
-              <div className="wallet__icon">👜</div>
+              <div className="wallet__icon">
+                <img src="/wallets/image 3.png" alt="" />
+              </div>
               <h5>Phantom</h5>
             </div>
             <div
               className="wallet"
               onClick={() => handleSelectedWallet("nest")}
             >
-              <div className="wallet__icon">👜</div>
+              <div className="wallet__icon">
+                <img src="/wallets/image 4.png" alt="" />
+              </div>
               <h5>Nest Wallet</h5>
             </div>
           </div>
@@ -155,11 +166,15 @@ export const Header = () => {
               className="wallet"
               onClick={() => handleSelectedWallet("coinbase")}
             >
-              <div className="wallet__icon">👜</div>
+              <div className="wallet__icon">
+                <img src="/wallets/image 2.png" alt="" />
+              </div>
               <h5>Coinbase</h5>
             </div>
             <div className="wallet" onClick={() => handleSelectedWallet("roi")}>
-              <div className="wallet__icon">👜</div>
+              <div className="wallet__icon">
+                <img src="/wallets/roilogo.png" alt="" />
+              </div>
               <h5>RoiWallet</h5>
             </div>
           </div>
@@ -169,7 +184,9 @@ export const Header = () => {
               className="wallet"
               onClick={() => handleSelectedWallet("walletconnect")}
             >
-              <div className="wallet__icon">👜</div>
+              <div className="wallet__icon">
+                <img src="/wallets/image 6.png" alt="" />
+              </div>
               <h5>Wallet Connect</h5>
             </div>
           </div>

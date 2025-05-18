@@ -155,3 +155,15 @@ h6 {
 .discnt-wlt-modal.openmodal {
   visibility: visible;
 }
+
+.selected-wallet,
+.wallet__icon {
+  display: flex;
+  align-items: center;
+}
+
+.selected-wallet img,
+.wallet__icon img {
+  width: 24px;
+  aspect-ratio: 1;
+}
