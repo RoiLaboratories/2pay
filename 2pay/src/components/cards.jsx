@@ -70,16 +70,20 @@ const Cards = ({ howitworks }) => {
           {/* Transaction State Views */}
           {transactionState === "loading" && (
             <div className="modal-feedback loading">
-              <p>🌀 Transaction Loading...</p>
+              <div className="spinner"></div>
+              <p>Transaction Loading...</p>
             </div>
           )}
+
           {transactionState === "success" && (
             <div className="modal-feedback success">
               <p>✅ Transaction Complete</p>
               <small>
                 You have successfully made a contribution to this pool.
               </small>
-              <button onClick={resetModal}>Close</button>
+              <button className="btn blue" onClick={resetModal}>
+                Close
+              </button>
             </div>
           )}
           {transactionState === "insufficient" && (
@@ -88,14 +92,18 @@ const Cards = ({ howitworks }) => {
               <small>
                 You have insufficient balance to contribute to this pool.
               </small>
-              <button onClick={resetModal}>Close</button>
+              <button className="btn blue" onClick={resetModal}>
+                Close
+              </button>
             </div>
           )}
           {transactionState === "networkError" && (
             <div className="modal-feedback error">
               <p>❌ Transaction Failed</p>
               <small>There was a network error. Please try again later.</small>
-              <button onClick={resetModal}>Close</button>
+              <button className="btn blue" onClick={resetModal}>
+                Close
+              </button>
             </div>
           )}
 

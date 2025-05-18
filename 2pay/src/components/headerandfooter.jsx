@@ -5,6 +5,8 @@ import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 
 import { Link } from "react-router-dom";
 
+import { useEffect } from "react";
+
 export const Header = () => {
   const [selectedSections, setSelectedSections] = useState(null);
   const [modalWalletOpen, setModalWalletOpen] = useState(false);
@@ -33,6 +35,35 @@ export const Header = () => {
     setDisconnectWallet(!disconnectWallet);
     console.log(disconnectWallet);
   };
+
+  useEffect(() => {
+    const sectionIds = ["home", "tiers", "how-it-works", "contribute", "faqs"];
+    const observerOptions = {
+      root: null,
+      rootMargin: "0px",
+      threshold: 0.6,
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setSelectedSections(entry.target.id);
+        }
+      });
+    }, observerOptions);
+
+    sectionIds.forEach((id) => {
+      const section = document.getElementById(id);
+      if (section) observer.observe(section);
+    });
+
+    return () => {
+      sectionIds.forEach((id) => {
+        const section = document.getElementById(id);
+        if (section) observer.unobserve(section);
+      });
+    };
+  }, []);
 
   return (
     <>
