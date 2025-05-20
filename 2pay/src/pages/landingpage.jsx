@@ -6,7 +6,7 @@ import Tierlist from "../components/tierlist";
 import Cards from "../components/cards";
 import Details from "../components/details";
 import Faqs from "../components/FAQs";
-import Modal from "../components/modal";
+// import Modal from "../components/modal";
 
 const LandingPage = () => {
   return (
