@@ -176,3 +176,21 @@ h6 {
   width: 24px;
   aspect-ratio: 1;
 }
+
+.black-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 98;
+}
+
+.header__modal.open {
+  z-index: 99;
+}
+
+.discnt-wlt-modal.openmodal {
+  z-index: 99;
+}
