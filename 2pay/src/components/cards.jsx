@@ -213,10 +213,10 @@ const Cards = ({ howitworks }) => {
             </div>
             <div className="card__body">
               <div className="currency">USDC</div>
-              <div className="price__value">$50</div>
+              <div className="price__value">$10</div>
               <button
                 className="btn blue contribute__btn"
-                onClick={() => openModal(50)}
+                onClick={() => openModal(10)}
               >
                 Contribute
               </button>
@@ -239,10 +239,15 @@ const Cards = ({ howitworks }) => {
             </div>
             <div className="card__body">
               <div className="currency">USDC</div>
+
               <div className="price__value">$200</div>
+
+
+              <div className="price__value">$50</div>
+
               <button
                 className="btn blue contribute__btn"
-                onClick={() => openModal(200)}
+                onClick={() => openModal(50)}
               >
                 Contribute
               </button>

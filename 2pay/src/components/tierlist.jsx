@@ -51,7 +51,7 @@ const Tierlist = () => {
             <p>5 Total Contributors </p>
             <p>First Gets: $1500</p>
             <p>Platform Gets: $1000</p>
-            <p> Pool Fills Fast</p>
+            <p>High Stakes, Big Rewards</p>
           </div>
           <a href="#contribute">
             {" "}
