@@ -68,6 +68,16 @@ export const Header = () => {
   return (
     <>
       <header className="header">
+        {(modalWalletOpen || disconnectWallet) && (
+          <div
+            className="black-overlay"
+            onClick={() => {
+              setModalWalletOpen(false);
+              setDisconnectWallet(false);
+            }}
+          ></div>
+        )}
+
         <div className="header__logo">
           <a href="/">
             <img src="2paylogo.png" alt="2Pay Logo" />
@@ -149,13 +159,11 @@ export const Header = () => {
           </div>
 
           <div className="selected-wallet">
-            {selectedWallet && (
-              <img src={walletEmojis[selectedWallet]} alt="" />
-            )}
+            {selectedWallet && <img src="/wallets/base logo 1.png" alt="" />}
           </div>
 
           <button className="btn blue" onClick={toggleWalletModal}>
-            {(selectedWallet && "address") || "Connect Wallet"}
+            {(selectedWallet && "0x80eb...fb8e") || "Connect Wallet"}
           </button>
         </div>
 
