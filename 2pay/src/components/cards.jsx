@@ -240,6 +240,12 @@ const Cards = ({ howitworks }) => {
             <div className="card__body">
               <div className="currency">USDC</div>
 
+
+
+              {/* <div className="price__value">$200</div> */}
+
+
+
               <div className="price__value">$50</div>
 
               <button
