@@ -43,7 +43,7 @@ const Faqs = () => {
         <div className="cards faqs__cards" ref={scrollRef}>
           <div className="card-1 box card">
             <div className="card__heading">Is my contribution secure?</div>
-            <div className="card__body">
+            <div className="  card__body faqs__card--body">
               Yes, our platform uses industry-standard security measures to
               ensure secure transactions.
             </div>
@@ -51,14 +51,14 @@ const Faqs = () => {
 
           <div className="card-2 box card">
             <div className="card__heading">How to track my contribution</div>
-            <div className="card__body">
+            <div className="  card__body faqs__card--body">
               You can track your contributions using blockchain explorers.
             </div>
           </div>
 
           <div className="card-3 box card">
             <div className="card__heading">Can I cancel my contribution?</div>
-            <div className="card__body">
+            <div className="  card__body faqs__card--body">
               Due to the nature of blockchain transactions, contributions are
               typically irreversible. Contact our support team for guidance.
             </div>
@@ -66,21 +66,21 @@ const Faqs = () => {
 
           <div className="card-4 box card">
             <div className="card__heading">Another FAQ Item</div>
-            <div className="card__body">
+            <div className="  card__body faqs__card--body">
               This is another answer for testing the scroll feature.
             </div>
           </div>
 
           <div className="card-5 box card">
             <div className="card__heading">Another FAQ Item</div>
-            <div className="card__body">
+            <div className="  card__body faqs__card--body">
               This is another answer for testing the scroll feature.
             </div>
           </div>
 
           <div className="card-6 box card">
             <div className="card__heading">Another FAQ Item</div>
-            <div className="card__body">
+            <div className="  card__body faqs__card--body">
               This is another answer for testing the scroll feature.
             </div>
           </div>
@@ -92,8 +92,6 @@ const Faqs = () => {
           </button>
         )}
 
-
-        
         {/*
         <div className="card-3 box card">
           <div className="card__heading">Can I cancel my contribution?</div>
@@ -117,7 +115,6 @@ const Faqs = () => {
           </p>
         </div>
           */}
-
       </div>
     </div>
   );

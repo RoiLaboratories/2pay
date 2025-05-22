@@ -2,12 +2,17 @@
   overflow-x: scroll;
   scrollbar-width: none;
   -ms-overflow-style: none;
-  padding: 4px;
+  padding: 20px;
   scroll-behavior: smooth;
+  justify-content: start;
 }
 
 .faqs__cards div {
   width: 400px;
+}
+
+.faqs__card--body {
+  font-size: 14px;
 }
 
 .horizontal-scroll::-webkit-scrollbar {
