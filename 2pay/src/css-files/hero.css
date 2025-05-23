@@ -16,9 +16,11 @@
 
 .hero__text--h1 {
   color: #ffffff;
-  font-size: 40px;
-  font-weight: 700;
+  font-size: 54px;
+  font-weight: 400;
   margin: 0;
+  line-height: 64px;
+  margin-bottom: 20px;
 }
 
 .hero__text--h1 span {
