@@ -7,7 +7,7 @@
   border-left: none;
   border-right: none;
   color: #ffffff;
-  gap: 20px;
+  gap: 50px;
 }
 
 .box {
@@ -18,7 +18,7 @@
   padding: 20px;
   box-sizing: border-box;
   align-items: center;
-  width: 300px;
+  width: 250px;
   box-shadow: 0px 4px 4px #036de5;
   transition: transform 0.5s ease, box-shadow 0.5s ease;
 }
@@ -41,12 +41,13 @@
 }
 
 .box__heading h1 {
-  font-size: 48px;
+  font-size: 25px;
   margin: 0;
+  font-family: 600;
 }
 
 .box__body {
-  font-size: 16px;
+  font-size: 14px;
   text-align: center;
-  font-weight: 500;
+  font-weight: 400;
 }

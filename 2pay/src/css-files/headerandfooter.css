@@ -27,8 +27,8 @@ header {
 }
 
 .header__sections h3 {
-  font-size: 18px;
-  font-weight: bold;
+  font-size: 14px;
+  font-weight: 400;
   cursor: pointer;
 }
 
@@ -58,7 +58,7 @@ header {
   border: none;
   color: #ffffff;
   font-size: 12px;
-  font-weight: bold;
+  font-weight: 400;
   cursor: pointer;
   transition: background-color 0.3s ease;
   font-family: "Poppins";
