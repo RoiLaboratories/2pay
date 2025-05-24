@@ -1,17 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../css-files/landingPage.css";
 import "../css-files/headerandfooter.css";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
-
 import { Link } from "react-router-dom";
-
-import { useEffect } from "react";
 
 export const Header = () => {
   const [selectedSections, setSelectedSections] = useState(null);
   const [modalWalletOpen, setModalWalletOpen] = useState(false);
   const [selectedWallet, setSelectedWallet] = useState(null);
   const [disconnectWallet, setDisconnectWallet] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const toggleWalletModal = () => {
     setModalWalletOpen(!modalWalletOpen);
@@ -19,21 +17,15 @@ export const Header = () => {
 
   const handleSelectedWallet = (selectedWallet) => {
     setSelectedWallet(selectedWallet);
-    setModalWalletOpen(!modalWalletOpen);
-  };
-
-  const walletEmojis = {
-    metamask: "/wallets/image1.png",
-    phantom: "/wallets/image 3.png",
-    nest: "/wallets/image 4.png",
-    coinbase: "/wallets/image 2.png",
-    roi: "/wallets/roilogo.png",
-    walletconnect: "/wallets/image 6.png",
+    setModalWalletOpen(false);
   };
 
   const toggleDscntWallet = () => {
     setDisconnectWallet(!disconnectWallet);
-    console.log(disconnectWallet);
+  };
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
   useEffect(() => {
@@ -68,12 +60,13 @@ export const Header = () => {
   return (
     <>
       <header className="header">
-        {(modalWalletOpen || disconnectWallet) && (
+        {(modalWalletOpen || disconnectWallet || isMobileMenuOpen) && (
           <div
             className="black-overlay"
             onClick={() => {
               setModalWalletOpen(false);
               setDisconnectWallet(false);
+              setIsMobileMenuOpen(false);
             }}
           ></div>
         )}
@@ -84,77 +77,93 @@ export const Header = () => {
           </a>
         </div>
 
-        <div className="header__sections">
-          <a
-            href="#home"
-            onClick={() => setSelectedSections("home")}
-            style={{
-              color: selectedSections === "home" ? "#036de5" : "#ffffff",
-            }}
-          >
-            <h3>Home</h3>
-          </a>
-          <a
-            href="#tiers"
-            onClick={() => setSelectedSections("tiers")}
-            style={{
-              color: selectedSections === "tiers" ? "#036de5" : "#ffffff",
-            }}
-          >
-            <h3>Tiers</h3>
-          </a>
-          <a
-            href="#how-it-works"
-            onClick={() => setSelectedSections("how-it-works")}
-            style={{
-              color:
-                selectedSections === "how-it-works" ? "#036de5" : "#ffffff",
-            }}
-          >
-            <h3>How it works</h3>
-          </a>
-          <a
-            href="#contribute"
-            onClick={() => setSelectedSections("contribute")}
-            style={{
-              color: selectedSections === "contribute" ? "#036de5" : "#ffffff",
-            }}
-          >
-            <h3>Contribute</h3>
-          </a>
-          <a
-            href="#faqs"
-            onClick={() => setSelectedSections("faqs")}
-            style={{
-              color: selectedSections === "faqs" ? "#036de5" : "#ffffff",
-            }}
-          >
-            <h3>FAQs</h3>
-          </a>
+        <div className="hamburger" onClick={toggleMobileMenu}>
+          <span className="bar"></span>
+          <span className="bar"></span>
+          <span className="bar"></span>
         </div>
 
-        <div className="utils">
-          <img
-            className="gear"
-            src="setting-2.png"
-            alt=""
-            onClick={() => {
-              if (selectedWallet) {
-                toggleDscntWallet();
-              }
-            }}
-          />
+        <div
+          className={`header__sections ${
+            isMobileMenuOpen ? "mobile-open" : ""
+          }`}
+        >
+          {["home", "tiers", "how-it-works", "contribute", "faqs"].map(
+            (section) => (
+              <a
+                key={section}
+                href={`#${section}`}
+                onClick={() => {
+                  setSelectedSections(section);
+                  setIsMobileMenuOpen(false);
+                }}
+                style={{
+                  color: selectedSections === section ? "#036de5" : "#ffffff",
+                }}
+              >
+                <h3>
+                  {section.charAt(0).toUpperCase() +
+                    section.slice(1).replace(/-/g, " ")}
+                </h3>
+              </a>
+            )
+          )}
+
+          {/* Moved utils here */}
+          <div className="utils">
+            {selectedWallet && (
+              <img
+                className="gear"
+                src="setting-2.png"
+                alt=""
+                onClick={toggleDscntWallet}
+              />
+            )}
+
+            <div
+              className={`discnt-wlt-modal ${
+                disconnectWallet ? "openmodal" : ""
+              }`}
+              onClick={() => {
+                setSelectedWallet(null);
+                setDisconnectWallet(false);
+              }}
+            >
+              <ExitToAppIcon />
+              Disconnect Wallet
+            </div>
+
+            <div className="selected-wallet">
+              {selectedWallet && <img src="/wallets/base logo 1.png" alt="" />}
+            </div>
+
+            <button className="btn blue" onClick={toggleWalletModal}>
+              {selectedWallet ? "0x80eb...fb8e" : "Connect Wallet"}
+            </button>
+          </div>
+        </div>
+
+        {/* Optional desktop-only utils (if you want it shown outside menu on large screens) */}
+        <div className="utils desktop-only">
+          {selectedWallet && (
+            <img
+              className="gear"
+              src="setting-2.png"
+              alt=""
+              onClick={toggleDscntWallet}
+            />
+          )}
 
           <div
-            className={`${
+            className={`discnt-wlt-modal ${
               disconnectWallet ? "openmodal" : ""
-            } discnt-wlt-modal`}
+            }`}
             onClick={() => {
               setSelectedWallet(null);
               setDisconnectWallet(false);
             }}
           >
-            <ExitToAppIcon></ExitToAppIcon>
+            <ExitToAppIcon />
             Disconnect Wallet
           </div>
 
@@ -163,41 +172,35 @@ export const Header = () => {
           </div>
 
           <button className="btn blue" onClick={toggleWalletModal}>
-            {(selectedWallet && "0x80eb...fb8e") || "Connect Wallet"}
+            {selectedWallet ? "0x80eb...fb8e" : "Connect Wallet"}
           </button>
         </div>
 
-        <div className={`${modalWalletOpen ? "open" : ""} header__modal`}>
+        <div className={`header__modal ${modalWalletOpen ? "open" : ""}`}>
           <h3 className="header__modal--heading">Connect Wallet</h3>
           <div className="header__modal--installed">
             <h6>Installed</h6>
-            <div
-              className="wallet"
-              onClick={() => handleSelectedWallet("metamask")}
-            >
-              <div className="wallet__icon">
-                <img src="/wallets/image1.png" alt="" />
+            {["metamask", "phantom", "nest"].map((wallet) => (
+              <div
+                className="wallet"
+                key={wallet}
+                onClick={() => handleSelectedWallet(wallet)}
+              >
+                <div className="wallet__icon">
+                  <img
+                    src={`/wallets/image${
+                      wallet === "nest"
+                        ? " 4"
+                        : wallet === "phantom"
+                        ? " 3"
+                        : "1"
+                    }.png`}
+                    alt=""
+                  />
+                </div>
+                <h5>{wallet.charAt(0).toUpperCase() + wallet.slice(1)}</h5>
               </div>
-              <h5>MetaMask</h5>
-            </div>
-            <div
-              className="wallet"
-              onClick={() => handleSelectedWallet("phantom")}
-            >
-              <div className="wallet__icon">
-                <img src="/wallets/image 3.png" alt="" />
-              </div>
-              <h5>Phantom</h5>
-            </div>
-            <div
-              className="wallet"
-              onClick={() => handleSelectedWallet("nest")}
-            >
-              <div className="wallet__icon">
-                <img src="/wallets/image 4.png" alt="" />
-              </div>
-              <h5>Nest Wallet</h5>
-            </div>
+            ))}
           </div>
           <div className="header__modal--Recommended">
             <h6>Recommended</h6>
