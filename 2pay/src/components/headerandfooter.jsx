@@ -3,7 +3,6 @@ import "../css-files/landingPage.css";
 import "../css-files/headerandfooter.css";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
 import { usePrivy } from '@privy-io/react-auth';
 
 
