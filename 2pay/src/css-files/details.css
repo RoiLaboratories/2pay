@@ -6,6 +6,7 @@
   color: #036de5;
   font-size: 40px;
   margin: 0;
+  font-weight: 400;
 }
 
 .hero__text {
@@ -19,4 +20,22 @@
 .hero__image2 img {
   width: 100%;
   object-fit: fill;
+}
+
+@media (max-width: 768px) {
+  .hero__text--blue {
+    font-size: 28px;
+  }
+
+  .hero__image2 {
+    width: 100%;
+    display: flex;
+    position: static;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero__image2 img {
+    width: 100%;
+  }
 }

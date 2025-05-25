@@ -12,15 +12,19 @@
 }
 
 .faqs__card--body {
-  font-size: 14px;
+  font-size: 12px;
+  font-weight: 300;
+  margin-top: 10px;
 }
 
 .horizontal-scroll::-webkit-scrollbar {
   display: none;
 }
 
-.card__heading {
+.box .card__heading {
   text-align: center;
+  font-weight: 500;
+  font-size: 18px;
 }
 
 .cards__div.faqs {
@@ -56,4 +60,10 @@
 
 .scroll-arrow:hover {
   background-color: #222;
+}
+
+@media (max-width: 768px) {
+  .faqs__cards {
+    flex-direction: row;
+  }
 }
