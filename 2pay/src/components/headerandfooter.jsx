@@ -186,21 +186,6 @@ export const Header = () => {
             className={`discnt-wlt-modal ${
               disconnectWallet ? "openmodal" : ""
             }`}
-
-        <div className="utils">
-          <img
-            className="gear"
-            src="setting-2.png"
-            alt=""
-            onClick={() => {
-              if (authenticated) {
-                setDisconnectWallet(true);
-              }
-            }}
-          />
-          <div
-            className={`${disconnectWallet ? "openmodal" : ""} discnt-wlt-modal`}
-
             onClick={() => {
               setDisconnectWallet(false);
               logout();
@@ -213,11 +198,7 @@ export const Header = () => {
             {authenticated && <img src="/wallets/base logo 1.png" alt="" />}
           </div>
           <button className="btn blue" onClick={toggleWalletModal}>
-
-            {selectedWallet ? "0x80eb...fb8e" : "Connect Wallet"}
-
             {(authenticated && user?.wallet?.address && (user.wallet.address.slice(0, 6) + "..." + user.wallet.address.slice(-4))) || "Connect Wallet"}
-
           </button>
         </div>
 
@@ -276,7 +257,6 @@ export const Header = () => {
               <h5>Wallet Connect</h5>
             </div>
           </div>
-        </div>
       </header>
     </>
   );
