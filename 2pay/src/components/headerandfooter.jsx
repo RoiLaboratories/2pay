@@ -3,29 +3,56 @@ import "../css-files/landingPage.css";
 import "../css-files/headerandfooter.css";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { usePrivy } from '@privy-io/react-auth';
+
 
 export const Header = () => {
   const [selectedSections, setSelectedSections] = useState(null);
   const [modalWalletOpen, setModalWalletOpen] = useState(false);
   const [selectedWallet, setSelectedWallet] = useState(null);
   const [disconnectWallet, setDisconnectWallet] = useState(false);
+
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { login, authenticated, user, logout } = usePrivy();
+
 
   const toggleWalletModal = () => {
-    setModalWalletOpen(!modalWalletOpen);
+    if (!authenticated) {
+      login();
+    } else {
+      // Do nothing if already authenticated
+    }
   };
 
   const handleSelectedWallet = (selectedWallet) => {
     setSelectedWallet(selectedWallet);
+
     setModalWalletOpen(false);
+
+    setModalWalletOpen(!modalWalletOpen);
+  };
+
+  const walletEmojis = {
+    metamask: "/wallets/image1.png",
+    phantom: "/wallets/image 3.png",
+    coinbase: "/wallets/image 2.png",
+    walletconnect: "/wallets/image 6.png",
+
   };
 
   const toggleDscntWallet = () => {
     setDisconnectWallet(!disconnectWallet);
+
   };
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
+
+    if (authenticated) {
+      logout();
+    }
+
   };
 
   useEffect(() => {
@@ -82,6 +109,7 @@ export const Header = () => {
           <span className="bar"></span>
           <span className="bar"></span>
         </div>
+
 
         <div
           className={`header__sections ${
@@ -158,21 +186,38 @@ export const Header = () => {
             className={`discnt-wlt-modal ${
               disconnectWallet ? "openmodal" : ""
             }`}
+
+        <div className="utils">
+          <img
+            className="gear"
+            src="setting-2.png"
+            alt=""
             onClick={() => {
-              setSelectedWallet(null);
+              if (authenticated) {
+                setDisconnectWallet(true);
+              }
+            }}
+          />
+          <div
+            className={`${disconnectWallet ? "openmodal" : ""} discnt-wlt-modal`}
+
+            onClick={() => {
               setDisconnectWallet(false);
+              logout();
             }}
           >
             <ExitToAppIcon />
             Disconnect Wallet
           </div>
-
           <div className="selected-wallet">
-            {selectedWallet && <img src="/wallets/base logo 1.png" alt="" />}
+            {authenticated && <img src="/wallets/base logo 1.png" alt="" />}
           </div>
-
           <button className="btn blue" onClick={toggleWalletModal}>
+
             {selectedWallet ? "0x80eb...fb8e" : "Connect Wallet"}
+
+            {(authenticated && user?.wallet?.address && (user.wallet.address.slice(0, 6) + "..." + user.wallet.address.slice(-4))) || "Connect Wallet"}
+
           </button>
         </div>
 
@@ -200,7 +245,12 @@ export const Header = () => {
                 </div>
                 <h5>{wallet.charAt(0).toUpperCase() + wallet.slice(1)}</h5>
               </div>
+
             ))}
+
+              <h5>Phantom</h5>
+            </div>
+
           </div>
           <div className="header__modal--Recommended">
             <h6>Recommended</h6>
@@ -212,12 +262,6 @@ export const Header = () => {
                 <img src="/wallets/image 2.png" alt="" />
               </div>
               <h5>Coinbase</h5>
-            </div>
-            <div className="wallet" onClick={() => handleSelectedWallet("roi")}>
-              <div className="wallet__icon">
-                <img src="/wallets/roilogo.png" alt="" />
-              </div>
-              <h5>RoiWallet</h5>
             </div>
           </div>
           <div className="header__modal--Others">
