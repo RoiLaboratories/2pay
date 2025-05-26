@@ -137,7 +137,7 @@ export const Header = () => {
               {selectedWallet && <img src="/wallets/base logo 1.png" alt="" />}
             </div>
 
-            <button className="btn blue" onClick={toggleWalletModal}>
+            <button className="btn blue mobilebtn" onClick={toggleWalletModal}>
               {selectedWallet ? "0x80eb...fb8e" : "Connect Wallet"}
             </button>
           </div>

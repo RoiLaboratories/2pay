@@ -261,4 +261,8 @@ h6 {
   .utils.desktop-only {
     display: flex;
   }
+
+  .mobilebtn {
+    display: none;
+  }
 }
