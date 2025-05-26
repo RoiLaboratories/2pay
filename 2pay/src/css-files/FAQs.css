@@ -1,69 +1,104 @@
-.faqs__cards {
-  overflow-x: scroll;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  padding: 20px;
-  scroll-behavior: smooth;
-  justify-content: start;
+.cards__div.faqs {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 64px 42px;
 }
 
-.faqs__cards div {
+.faqs__scroll-container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+}
+
+.faqs__cards {
+  display: flex;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  scroll-behavior: smooth;
+  gap: 20px;
+  align-items: stretch;
+  width: 100%;
+  padding: 20px;
+  justify-content: flex-start;
+}
+
+.faqs__cards::-webkit-scrollbar {
+  display: none;
+}
+
+.faqs__cards .box.card {
   width: 400px;
+  min-width: 400px;  height: 180px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background-color: #1a1a1a;
+  border-radius: 12px;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.faqs__cards div:hover {
+  transform: translateY(-5px);
+  border-color: rgba(255, 255, 255, 0.3);
 }
 
 .faqs__card--body {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 300;
-  margin-top: 10px;
-}
-
-.horizontal-scroll::-webkit-scrollbar {
-  display: none;
+  margin-top: 15px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.8);
+  text-align: center;
 }
 
 .box .card__heading {
   text-align: center;
   font-weight: 500;
   font-size: 18px;
+  color: #ffffff;
 }
 
 .cards__div.faqs {
   border-bottom: 1px solid #ffffff40;
-  margin-bottom: 150px;
+  margin-bottom: 100px;
+  padding: 0 20px;
 }
 
 .faqs__scroll-container {
   position: relative;
+  margin: 0 -20px;
 }
 
 .scroll-arrow {
   position: absolute;
   top: 50%;
-  right: 0;
+  right: 10px;
   transform: translateY(-50%);
-  font-size: 2rem;
-  background-color: #111;
+  font-size: 1.5rem;
+  background-color: rgba(17, 17, 17, 0.9);
   color: white;
   cursor: pointer;
-  width: 80px;
-  height: 80px;
+  width: 40px;
+  height: 40px;
   z-index: 2;
   border-radius: 50%;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
-  transition: background-color 0.3s ease;
-  border: 1px solid #ffffff40;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-sizing: border-box;
+  backdrop-filter: blur(5px);
 }
 
 .scroll-arrow:hover {
-  background-color: #222;
-}
-
-@media (max-width: 768px) {
-  .faqs__cards {
-    flex-direction: row;
-  }
+  background-color: rgba(34, 34, 34, 0.9);
+  border-color: rgba(255, 255, 255, 0.5);
 }

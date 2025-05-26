@@ -6,6 +6,9 @@ import "../css-files/FAQs.css";
 const Faqs = () => {
   const scrollRef = useRef(null);
   const [showArrow, setShowArrow] = useState(true);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
 
   const checkScroll = () => {
     const container = scrollRef.current;
@@ -17,8 +20,29 @@ const Faqs = () => {
 
   const scrollRight = () => {
     if (scrollRef.current) {
-      scrollRef.current.scrollBy({ left: 400, behavior: "smooth" });
+      const cardWidth = 320; // card width + gap
+      const currentScroll = scrollRef.current.scrollLeft;
+      const targetScroll = Math.ceil((currentScroll + cardWidth) / cardWidth) * cardWidth;
+      scrollRef.current.scrollTo({ left: targetScroll, behavior: "smooth" });
     }
+  };
+
+  const handleMouseDown = (e) => {
+    setIsDragging(true);
+    setStartX(e.pageX - scrollRef.current.offsetLeft);
+    setScrollLeft(scrollRef.current.scrollLeft);
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  const handleMouseMove = (e) => {
+    if (!isDragging) return;
+    e.preventDefault();
+    const x = e.pageX - scrollRef.current.offsetLeft;
+    const walk = (x - startX) * 2;
+    scrollRef.current.scrollLeft = scrollLeft - walk;
   };
 
   useEffect(() => {
@@ -27,9 +51,11 @@ const Faqs = () => {
 
     checkScroll();
     container.addEventListener("scroll", checkScroll);
+    window.addEventListener("resize", checkScroll);
 
     return () => {
       container.removeEventListener("scroll", checkScroll);
+      window.removeEventListener("resize", checkScroll);
     };
   }, []);
 
@@ -40,7 +66,14 @@ const Faqs = () => {
       </div>
 
       <div className="faqs__scroll-container">
-        <div className="cards faqs__cards" ref={scrollRef}>
+        <div
+          className="cards faqs__cards"
+          ref={scrollRef}
+          onMouseDown={handleMouseDown}
+          onMouseUp={handleMouseUp}
+          onMouseLeave={handleMouseUp}
+          onMouseMove={handleMouseMove}
+        >
           <div className="card-1 box card">
             <div className="card__heading">Is my contribution secure?</div>
             <div className="  card__body faqs__card--body">
@@ -65,56 +98,32 @@ const Faqs = () => {
           </div>
 
           <div className="card-4 box card">
-            <div className="card__heading">Another FAQ Item</div>
+            <div className="card__heading">When do i get payouts?</div>
             <div className="  card__body faqs__card--body">
-              This is another answer for testing the scroll feature.
+              When a pool fills, payouts are automatically made by our smart contracts.
             </div>
           </div>
 
           <div className="card-5 box card">
-            <div className="card__heading">Another FAQ Item</div>
+            <div className="card__heading">What wallets are supported?</div>
             <div className="  card__body faqs__card--body">
-              This is another answer for testing the scroll feature.
+              All EVM compatible chain wallets are supported.
             </div>
           </div>
 
           <div className="card-6 box card">
-            <div className="card__heading">Another FAQ Item</div>
+            <div className="card__heading">How does the platform work?</div>
             <div className="  card__body faqs__card--body">
-              This is another answer for testing the scroll feature.
+              The platform works on a FIFO (First-in-First-Out) basis.
             </div>
           </div>
         </div>
 
         {showArrow && (
-          <button className="scroll-arrow" onClick={scrollRight}>
+          <button className="scroll-arrow" onClick={scrollRight} aria-label="Scroll right">
             ➜
           </button>
         )}
-
-        {/*
-        <div className="card-3 box card">
-          <div className="card__heading">Can I cancel my contribution?</div>
-          <p className="card__body">
-            Due to the nature of blockchain transactions, contributions are
-            typically irreversible. Contact our support team for guidance{" "}
-          </p>
-        </div>
-        <div className="card-3 box card">
-          <div className="card__heading">Can I cancel my contribution?</div>
-          <p className="card__body">
-            Due to the nature of blockchain transactions, contributions are
-            typically irreversible. Contact our support team for guidance{" "}
-          </p>
-        </div>
-        <div className="card-3 box card">
-          <div className="card__heading">Can I cancel my contribution?</div>
-          <p className="card__body">
-            Due to the nature of blockchain transactions, contributions are
-            typically irreversible. Contact our support team for guidance{" "}
-          </p>
-        </div>
-          */}
       </div>
     </div>
   );
