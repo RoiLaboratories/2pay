@@ -7,7 +7,6 @@ import { poolService } from '../services/api';
 import { usePrivy } from '@privy-io/react-auth';
 import { ethers, parseUnits } from 'ethers';
 import axios from 'axios';
-
 const Cards = ({ howitworks }) => {
   const [poolStatus, setPoolStatus] = useState({
     1: { currentBatch: 0, contributorsInBatch: 0, nextPayoutIndex: 0 },
@@ -17,11 +16,10 @@ const Cards = ({ howitworks }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedPrice, setSelectedPrice] = useState(null);
   const [transactionState, setTransactionState] = useState("idle");
-  const { authenticated, user, wallet } = usePrivy();
-  const [walletAddress, setWalletAddress] = useState("");
+  const { authenticated, user, wallet } = usePrivy();  const [walletAddress, setWalletAddress] = useState("");
   const [tokenReady, setTokenReady] = useState(false);
 
-  // Fetch JWT token after wallet connection
+  // Fetch JWT token afterwallet connection
   useEffect(() => {
     async function fetchJwt() {
       if (authenticated && user?.wallet?.address) {
@@ -226,11 +224,12 @@ const Cards = ({ howitworks }) => {
       });
       // Get the tier number
       const tier = selectedPrice === 10 ? 1 : selectedPrice === 50 ? 2 : 3;
-      
-      // Check if user has already contributed to this tier
+        // Check if user has already contributed to this tier
       const hasUserContributed = await twoPay.hasContributed(await signer.getAddress(), tier);
       if (hasUserContributed) {
-        throw new Error('You have already contributed to this tier');
+        setTransactionState("error");
+        setModalOpen(true); // Ensure modal stays open to show error
+        return;
       }
 
       // Calculate amount based on tier
@@ -307,8 +306,7 @@ const Cards = ({ howitworks }) => {
                 Close
               </button>
             </div>
-          )}
-          {transactionState === "insufficient" && (
+          )}          {transactionState === "insufficient" && (
             <div className="modal-feedback error">
               <p>❌ Transaction Failed</p>
               <small>
@@ -319,6 +317,19 @@ const Cards = ({ howitworks }) => {
               </button>
             </div>
           )}
+
+          {transactionState === "error" && (
+            <div className="modal-feedback error">
+              <p>❌ Transaction Failed</p>
+              <small>
+                Transaction failed, You have already contributed to this tier.
+              </small>
+              <button className="btn blue" onClick={resetModal}>
+                Close
+              </button>
+            </div>
+          )}
+
           {transactionState === "networkError" && (
             <div className="modal-feedback error">
               <p>❌ Transaction Failed</p>
@@ -381,8 +392,7 @@ const Cards = ({ howitworks }) => {
               </div>
             </>
           )}
-        </div>
-      </div>
+        </div>      </div>
 
       {/* How It Works Section */}
       <div className="cards__div">

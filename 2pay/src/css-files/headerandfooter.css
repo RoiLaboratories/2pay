@@ -8,7 +8,7 @@ header {
   box-sizing: border-box;
   padding: 40px;
   display: flex;
-  z-index: 999;
+  z-index: 1000;
   align-items: center;
   color: #ffffff;
   justify-content: space-between;
@@ -146,21 +146,22 @@ h6 {
 }
 
 .discnt-wlt-modal {
-  background-color: #1a1a1a;
-  display: flex;
-  gap: 10px;
-  padding: 10px 20px;
-  border-radius: 10px;
-  box-shadow: 0px 2px 2px #036de5;
   position: absolute;
-  top: 8cap;
-  right: 200px;
-  visibility: hidden;
+  top: 100%;
+  right: 0;
+  background-color: #1c1c1c;
+  padding: 1rem;
+  border-radius: 10px;
+  display: none;
+  align-items: center;
+  gap: 8px;
   cursor: pointer;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
 }
 
 .discnt-wlt-modal.openmodal {
-  visibility: visible;
+  display: flex;
 }
 
 .selected-wallet,
@@ -181,10 +182,10 @@ h6 {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.6);
-  z-index: 98;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 999;
 }
 
 .header__modal.open {
@@ -214,20 +215,23 @@ h6 {
 @media (max-width: 768px) {
   header {
     width: 100vw;
+    padding: 20px;
   }
 
   .header__sections {
     display: none;
-    position: absolute;
+    position: fixed;
     top: 100px;
     right: 0;
     background-color: #1e1e1e;
-    width: 50%;
+    width: 80%;
     flex-direction: column;
     gap: 16px;
-    padding: 16px;
-    z-index: 99;
-    border-radius: 0 0 24px 24px;
+    padding: 20px;
+    z-index: 999;
+    height: calc(100vh - 100px);
+    overflow-y: auto;
+    border-left: 1px solid #ffffff40;
   }
 
   .header__sections.mobile-open {
@@ -236,6 +240,28 @@ h6 {
 
   .hamburger {
     display: flex;
+  }
+
+  .mobile-wallet-button {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #ffffff20;
+    width: 100%;
+  }
+
+  .mobile-wallet-button .btn.blue {
+    width: 100%;
+    height: 45px;
+    font-size: 14px;
+  }
+
+  .header__sections a {
+    padding: 12px 0;
+    width: 100%;
+  }
+
+  .header__sections h3 {
+    font-size: 16px;
   }
 
   footer img {
@@ -254,11 +280,17 @@ h6 {
 }
 
 @media (min-width: 769px) {
-  .header__sections.mobile-open .utils {
-    display: none;
-  }
-
   .utils.desktop-only {
     display: flex;
+  }
+
+  .mobile-wallet-button {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .utils.desktop-only {
+    display: none !important;
   }
 }
