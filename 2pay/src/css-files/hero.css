@@ -7,6 +7,7 @@
   min-height: 453px;
   border-bottom: 1px solid #ffffff40;
   height: calc(100vh - 200px);
+  box-sizing: border-box;
 }
 
 @keyframes slideInFromBottom {
@@ -56,4 +57,25 @@
   line-height: 1.6;
   animation: slideInFromBottom 1s ease-out 0.3s;
   animation-fill-mode: forwards;
+}
+
+@media (max-width: 768px) {
+  .hero {
+    height: auto;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .hero__text {
+    box-sizing: border-box;
+  }
+  .hero__text--h1 {
+    font-size: 28px;
+  }
+
+  .hero__text--p {
+    font-size: 14px;
+  }
 }

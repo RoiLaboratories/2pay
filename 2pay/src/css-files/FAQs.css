@@ -40,7 +40,7 @@
 
 .faqs__cards .box.card {
   width: 400px;
-  min-width: 400px;
+  /* min-width: 400px; */
   height: 180px;
   display: flex;
   flex-direction: column;
@@ -109,4 +109,25 @@
 .scroll-arrow:hover {
   background-color: rgba(34, 34, 34, 0.9);
   border-color: rgba(255, 255, 255, 0.5);
+}
+
+@media (max-width: 768px) {
+  .faqs__cards {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .faqs__cards .box.card {
+    width: 300px;
+    padding: 20px;
+    box-sizing: border-box;
+    height: 130px;
+  }
+  .box .card__heading {
+    font-size: 16px;
+  }
+
+  .faqs__card--body {
+    font-size: 12px;
+  }
 }
