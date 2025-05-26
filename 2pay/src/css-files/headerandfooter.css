@@ -284,11 +284,6 @@ h6 {
     display: flex;
   }
 
-<<<<<<< HEAD
-  .mobilebtn {
-    display: none;
-  }
-=======
   .mobile-wallet-button {
     display: none;
   }
@@ -298,5 +293,4 @@ h6 {
   .utils.desktop-only {
     display: none !important;
   }
->>>>>>> 251cb98f9387159cd9a5911c0ae9dcc6883eda37
 }

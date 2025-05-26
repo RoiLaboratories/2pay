@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../css-files/landingPage.css";
 import "../css-files/headerandfooter.css";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import { Link } from "react-router-dom";
 import { usePrivy } from "@privy-io/react-auth";
 
 export const Header = () => {
@@ -55,7 +56,6 @@ export const Header = () => {
       });
     };
   }, []);
-
   return (
     <>
       {(isMobileMenuOpen || disconnectModalOpen) && (
@@ -73,13 +73,11 @@ export const Header = () => {
             <img src="2paylogo.png" alt="2Pay Logo" />
           </a>
         </div>
-
         <div className="hamburger" onClick={toggleMobileMenu}>
           <span className="bar"></span>
           <span className="bar"></span>
           <span className="bar"></span>
         </div>
-
         <div
           className={`header__sections ${
             isMobileMenuOpen ? "mobile-open" : ""
@@ -122,29 +120,29 @@ export const Header = () => {
           {/* Mobile Wallet Button */}
           <div className="mobile-wallet-button">
             <button className="btn blue" onClick={toggleWalletModal}>
-              {authenticated && user?.wallet?.address
-                ? user.wallet.address.slice(0, 6) +
+              {(authenticated &&
+                user?.wallet?.address &&
+                user.wallet.address.slice(0, 6) +
                   "..." +
-                  user.wallet.address.slice(-4)
-                : "Connect Wallet"}
+                  user.wallet.address.slice(-4)) ||
+                "Connect Wallet"}
             </button>
           </div>
         </div>
-
+        {/* Wallet utils - always visible on desktop */}{" "}
         {/* Desktop Wallet Button */}
         {!isMobileMenuOpen && (
           <div className="utils desktop-only">
             <div className="selected-wallet">
-              {authenticated && (
-                <img src="/wallets/base logo 1.png" alt="Wallet" />
-              )}
+              {authenticated && <img src="/wallets/base logo 1.png" alt="" />}
             </div>
             <button className="btn blue" onClick={toggleWalletModal}>
-              {authenticated && user?.wallet?.address
-                ? user.wallet.address.slice(0, 6) +
+              {(authenticated &&
+                user?.wallet?.address &&
+                user.wallet.address.slice(0, 6) +
                   "..." +
-                  user.wallet.address.slice(-4)
-                : "Connect Wallet"}
+                  user.wallet.address.slice(-4)) ||
+                "Connect Wallet"}
             </button>
 
             {authenticated && (

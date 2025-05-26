@@ -22,7 +22,8 @@ const Faqs = () => {
     if (scrollRef.current) {
       const cardWidth = 320; // card width + gap
       const currentScroll = scrollRef.current.scrollLeft;
-      const targetScroll = Math.ceil((currentScroll + cardWidth) / cardWidth) * cardWidth;
+      const targetScroll =
+        Math.ceil((currentScroll + cardWidth) / cardWidth) * cardWidth;
       scrollRef.current.scrollTo({ left: targetScroll, behavior: "smooth" });
     }
   };
@@ -98,9 +99,10 @@ const Faqs = () => {
           </div>
 
           <div className="card-4 box card">
-            <div className="card__heading">When do i get payouts?</div>
+            <div className="card__heading">When do I get payouts?</div>
             <div className="  card__body faqs__card--body">
-              When a pool fills, payouts are automatically made by our smart contracts.
+              When a pool fills, payouts are automatically made by our smart
+              contracts.
             </div>
           </div>
 
@@ -120,7 +122,11 @@ const Faqs = () => {
         </div>
 
         {showArrow && (
-          <button className="scroll-arrow" onClick={scrollRight} aria-label="Scroll right">
+          <button
+            className="scroll-arrow"
+            onClick={scrollRight}
+            aria-label="Scroll right"
+          >
             ➜
           </button>
         )}

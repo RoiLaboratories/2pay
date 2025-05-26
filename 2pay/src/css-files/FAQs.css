@@ -1,3 +1,10 @@
+.faqs {
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .cards__div.faqs {
   display: flex;
   flex-direction: column;
@@ -33,7 +40,8 @@
 
 .faqs__cards .box.card {
   width: 400px;
-  min-width: 400px;  height: 180px;
+  min-width: 400px;
+  height: 180px;
   display: flex;
   flex-direction: column;
   justify-content: center;
