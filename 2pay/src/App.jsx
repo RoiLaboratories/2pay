@@ -1,20 +1,24 @@
 import "./css-files/landingPage.css";
 import { Routes, Route } from "react-router-dom";
 import LandingPage from "./pages/landingpage";
-import { PrivyProvider } from '@privy-io/react-auth';
+import { PrivyProvider } from "@privy-io/react-auth";
 
 const App = () => {
+  {
+    console.log("Privy App ID:", import.meta.env.VITE_PRIVY_APP_ID);
+  }
+
   return (
     <PrivyProvider
       appId={import.meta.env.VITE_PRIVY_APP_ID}
       config={{
         appearance: {
-          theme: 'dark',
-          accentColor: '#036de5',
+          theme: "dark",
+          accentColor: "#036de5",
           showWalletLoginFirst: true,
         },
         embeddedWallets: {
-          createOnLogin: 'all-users',
+          createOnLogin: "all-users",
         },
       }}
     >
