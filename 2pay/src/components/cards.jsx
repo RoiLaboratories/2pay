@@ -1,34 +1,109 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../css-files/landingPage.css";
 import "../css-files/cards.css";
 import { Link } from "react-router-dom";
 import "../css-files/modal.css";
+import { poolService } from '../services/api';
+import { usePrivy } from '@privy-io/react-auth';
+import { ethers, parseUnits } from 'ethers';
+import axios from 'axios';
 
 const Cards = ({ howitworks }) => {
-  const [stepTier1, setStepTier1] = useState(0);
-  const [stepTier2, setStepTier2] = useState(0);
-  const [stepTier3, setStepTier3] = useState(0);
+  const [poolStatus, setPoolStatus] = useState({
+    1: { currentBatch: 0, contributorsInBatch: 0, nextPayoutIndex: 0 },
+    2: { currentBatch: 0, contributorsInBatch: 0, nextPayoutIndex: 0 },
+    3: { currentBatch: 0, contributorsInBatch: 0, nextPayoutIndex: 0 }
+  });
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedPrice, setSelectedPrice] = useState(null);
-  const [transactionState, setTransactionState] = useState("idle"); // idle | loading | success | insufficient | networkError
+  const [transactionState, setTransactionState] = useState("idle");
+  const { authenticated, user, wallet } = usePrivy();
+  const [walletAddress, setWalletAddress] = useState("");
+  const [tokenReady, setTokenReady] = useState(false);
 
-  const addStep = (tier) => {
-    switch (tier) {
-      case 1:
-        setStepTier1((prev) => (prev < 5 ? prev + 1 : 0));
-        break;
-      case 2:
-        setStepTier2((prev) => (prev < 5 ? prev + 1 : 0));
-        break;
-      case 3:
-        setStepTier3((prev) => (prev < 5 ? prev + 1 : 0));
-        break;
-      default:
-        break;
+  // Fetch JWT token after wallet connection
+  useEffect(() => {
+    async function fetchJwt() {
+      if (authenticated && user?.wallet?.address) {
+        setWalletAddress(user.wallet.address);
+        // Always fetch a new token after wallet connect
+        try {
+          console.log('Fetching nonce for address:', user.wallet.address);
+          // Get nonce from backend
+          const nonceRes = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:3000/api'}/auth/nonce`, { address: user.wallet.address });
+          const nonce = nonceRes.data.nonce;
+          console.log('Nonce received:', nonce);
+          // Detect wallet type and get signer
+          let provider, signer;
+          if (user.wallet.walletClientType === 'metamask' || user.wallet.connectorType === 'injected') {
+            provider = new ethers.BrowserProvider(window.ethereum);
+            signer = await provider.getSigner();
+          } else if (typeof user.wallet.getEthersProvider === 'function') {
+            provider = await user.wallet.getEthersProvider();
+            signer = provider.getSigner();
+          } else {
+            throw new Error('No compatible wallet provider found.');
+          }
+          const signature = await signer.signMessage(nonce);
+          console.log('Signature:', signature);
+          // Send signature to backend to get JWT
+          const loginRes = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:3000/api'}/auth/login`, {
+            address: user.wallet.address,
+            signature
+          });
+          console.log('Login response:', loginRes);
+          const token = loginRes.data.token;
+          localStorage.setItem('token', token);
+          console.log('JWT token stored in localStorage:', token);
+          setTokenReady(true);
+        } catch (err) {
+          console.error('Failed to fetch JWT token:', err);
+          localStorage.removeItem('token');
+          setTokenReady(false);
+        }
+      }
     }
-  };
+    fetchJwt();
+  }, [authenticated, user, wallet]);
 
-  const getProgressWidth = (step) => `${(step / 5) * 100}%`;
+  // Fetch pool status only after token is ready
+  useEffect(() => {
+    if (!tokenReady) return;
+    const fetchPoolStatus = async () => {
+      // Only fetch if JWT token is present
+      if (!localStorage.getItem('token')) return;
+      try {
+        const [tier1, tier2, tier3] = await Promise.all([
+          poolService.getPoolStatus(1),
+          poolService.getPoolStatus(2),
+          poolService.getPoolStatus(3)
+        ]);
+        
+        setPoolStatus({
+          1: tier1.data,
+          2: tier2.data,
+          3: tier3.data
+        });
+      } catch (error) {
+        console.error('Failed to fetch pool status:', error);
+      }
+    };
+
+    fetchPoolStatus();
+    const interval = setInterval(fetchPoolStatus, 30000); // Refresh every 30 seconds
+    return () => clearInterval(interval);
+  }, [tokenReady, authenticated, user]);
+
+  useEffect(() => {
+    if (authenticated && user?.wallet?.address) {
+      setWalletAddress(user.wallet.address);
+    }
+  }, [authenticated, user]);
+
+  const getProgressWidth = (tier) => {
+    const status = poolStatus[tier];
+    return `${(status.contributorsInBatch / 5) * 100}%`;
+  };
 
   const openModal = (price) => {
     setSelectedPrice(price);
@@ -42,20 +117,167 @@ const Cards = ({ howitworks }) => {
     setTransactionState("idle");
   };
 
-  const confirmTransaction = () => {
-    setTransactionState("loading");
+  const BASE_SEPOLIA_CHAIN_ID = '0x14A34'; // 84532 in hex
+  // Get network configuration from environment
+  const CHAIN_ID = `0x${Number(import.meta.env.VITE_CHAIN_ID).toString(16)}`; // Convert to hex
+  const NETWORK_NAME = import.meta.env.VITE_NETWORK_NAME;
+  const RPC_URL = NETWORK_NAME === 'base-sepolia' 
+    ? 'https://sepolia.base.org' 
+    : 'https://mainnet.base.org';
+  const EXPLORER_URL = NETWORK_NAME === 'base-sepolia'
+    ? 'https://sepolia.basescan.org'
+    : 'https://basescan.org';
 
-    setTimeout(() => {
-      const rand = Math.random();
-
-      if (rand < 0.6) {
-        setTransactionState("success");
-      } else if (rand < 0.8) {
-        setTransactionState("insufficient");
-      } else {
-        setTransactionState("networkError");
+  async function ensureCorrectNetwork() {
+    if (window.ethereum) {
+      const chainId = await window.ethereum.request({ method: 'eth_chainId' });
+      if (chainId !== CHAIN_ID) {
+        try {
+          await window.ethereum.request({
+            method: 'wallet_switchEthereumChain',
+            params: [{ chainId: CHAIN_ID }],
+          });
+          return true;
+        } catch (switchError) {
+          // If the network is not added, prompt to add it
+          if (switchError.code === 4902) {
+            await window.ethereum.request({
+              method: 'wallet_addEthereumChain',
+              params: [{
+                chainId: CHAIN_ID,
+                chainName: NETWORK_NAME === 'base-sepolia' ? 'Base Sepolia' : 'Base',
+                rpcUrls: [RPC_URL],
+                nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
+                blockExplorerUrls: [EXPLORER_URL],
+              }],
+            });
+            return true;
+          }
+          throw switchError;
+        }
       }
-    }, 2000);
+      return true;
+    }
+    return false;
+  }
+
+  const confirmTransaction = async () => {
+    if (!tokenReady || !localStorage.getItem('token')) {
+      setTransactionState('networkError');
+      alert('Authentication error: Please reconnect your wallet.');
+      return;
+    }
+    setTransactionState("loading");
+    try {      const switched = await ensureCorrectNetwork();
+      if (!switched) throw new Error(`Please connect to ${NETWORK_NAME} network.`);
+      if (!authenticated || !user?.wallet?.address) throw new Error('Wallet not connected');
+      // Detect wallet type and get signer
+      let provider, signer;
+      if (user.wallet.walletClientType === 'metamask' || user.wallet.connectorType === 'injected') {
+        provider = new ethers.BrowserProvider(window.ethereum);
+        signer = await provider.getSigner();
+      } else if (typeof user.wallet.getEthersProvider === 'function') {
+        provider = await user.wallet.getEthersProvider();
+        signer = provider.getSigner();
+      } else {
+        throw new Error('No compatible wallet provider found.');
+      }      const USDC_ADDRESS = import.meta.env.VITE_USDC_ADDRESS;
+      const TWO_PAY_ADDRESS = import.meta.env.VITE_TWO_PAY_CONTRACT_ADDRESS;
+
+      // Debug logging for addresses
+      console.log('Using addresses:', {
+        USDC: USDC_ADDRESS,
+        TwoPay: TWO_PAY_ADDRESS
+      });
+
+      if (!USDC_ADDRESS || !TWO_PAY_ADDRESS) {
+        throw new Error('Contract addresses not properly configured');
+      }
+
+      const USDC_ABI = [
+        "function approve(address spender, uint256 amount) external returns (bool)",
+        "function allowance(address owner, address spender) external view returns (uint256)",
+        "function balanceOf(address account) external view returns (uint256)",
+        "function transfer(address to, uint256 amount) external returns (bool)",
+        "function transferFrom(address from, address to, uint256 amount) external returns (bool)"
+      ];
+      const TWO_PAY_ABI = [
+        "function contribute(uint256 tier) external",
+        "function hasContributed(address, uint256) external view returns (bool)",
+        "function pools(uint256) external view returns (uint256 contributionAmount, uint256 currentBatch)",
+        "function owner() external view returns (address)",
+        "event ContributionAdded(address indexed contributor, uint256 indexed tier, uint256 batch)",
+        "event PayoutProcessed(address indexed contributor, uint256 amount, uint256 indexed tier, uint256 batch)"
+      ];
+      
+      // Create contract instances
+      const usdc = new ethers.Contract(USDC_ADDRESS, USDC_ABI, signer);
+      const twoPay = new ethers.Contract(TWO_PAY_ADDRESS, TWO_PAY_ABI, signer);
+
+      // Verify contracts are properly initialized
+      if (!usdc || !twoPay) {
+        throw new Error('Failed to initialize contracts');
+      }
+
+      // Debug contract methods
+      console.log('Available contract functions:', {
+        usdc: USDC_ABI.map(item => item.startsWith('function') ? item.split('function ')[1].split('(')[0] : null).filter(Boolean),
+        twoPay: TWO_PAY_ABI.map(item => item.startsWith('function') ? item.split('function ')[1].split('(')[0] : null).filter(Boolean)
+      });
+      // Get the tier number
+      const tier = selectedPrice === 10 ? 1 : selectedPrice === 50 ? 2 : 3;
+      
+      // Check if user has already contributed to this tier
+      const hasUserContributed = await twoPay.hasContributed(await signer.getAddress(), tier);
+      if (hasUserContributed) {
+        throw new Error('You have already contributed to this tier');
+      }
+
+      // Calculate amount based on tier
+      let amount;
+      if (selectedPrice === 10) amount = parseUnits("10", 6);
+      else if (selectedPrice === 50) amount = parseUnits("50", 6);
+      else if (selectedPrice === 500) amount = parseUnits("500", 6);
+      else throw new Error('Invalid tier');
+
+      // First approve USDC spending
+      const allowance = await usdc.allowance(await signer.getAddress(), TWO_PAY_ADDRESS);
+      if (allowance < amount) {
+        const approveTx = await usdc.approve(TWO_PAY_ADDRESS, amount);
+        await approveTx.wait();
+      }      // Verify contract state before contribution
+      const usdcBalance = await usdc.balanceOf(await signer.getAddress());
+      console.log('USDC Balance:', ethers.formatUnits(usdcBalance, 6));
+      
+      // Then make contribution
+      console.log('Making contribution with tier:', tier);
+      const tx = await twoPay.contribute(tier);
+      console.log('Transaction sent:', tx.hash);
+      await tx.wait();
+      console.log('Transaction confirmed');
+      try {
+        await poolService.registerContribution(
+          tier,
+          tx.hash
+        );
+        setTransactionState("success");
+      } catch (apiError) {
+        // Transaction succeeded but API failed
+        setTransactionState("networkError");
+        alert('Your contribution was sent on-chain, but we could not record it in our system. Please contact support with your transaction hash: ' + tx.hash);
+      }
+    } catch (error) {
+      console.error('Transaction failed:', error);
+      const errMsg = error.message?.toLowerCase() || '';
+      if (
+        errMsg.includes('insufficient') ||
+        errMsg.includes('transfer amount exceeds balance')
+      ) {
+        setTransactionState('insufficient');
+      } else {
+        setTransactionState('networkError');
+      }
+    }
   };
 
   return (
@@ -110,7 +332,6 @@ const Cards = ({ howitworks }) => {
           {transactionState === "idle" && (
             <>
               <h2 className="modal-title">Contribute</h2>
-
               <div className="modal-box">
                 <div className="modal-box-left">
                   <div className="pay-section">
@@ -126,10 +347,9 @@ const Cards = ({ howitworks }) => {
                     </div>
                   </div>
                 </div>
-
                 <div className="modal-box-right">
                   <div className="label">Address</div>
-                  <div className="address-box">0x80eb...fb8e</div>
+                  <div className="address-box">{walletAddress ? walletAddress.slice(0, 6) + '...' + walletAddress.slice(-4) : 'Not connected'}</div>
                 </div>
               </div>
 
@@ -201,13 +421,13 @@ const Cards = ({ howitworks }) => {
           <div className="card-1 box card">
             <div className="contribute__heading">
               Tier 1
-              <div className="progress__bar" onClick={() => addStep(1)}>
+              <div className="progress__bar">
                 <div className="progress__num">
-                  {stepTier1 < 5 ? stepTier1 : "Filled"}
+                  {poolStatus[1].contributorsInBatch < 5 ? poolStatus[1].contributorsInBatch : "Filled"}
                 </div>
                 <div
                   className="progress__indicator"
-                  style={{ width: getProgressWidth(stepTier1) }}
+                  style={{ width: getProgressWidth(1) }}
                 ></div>
               </div>
             </div>
@@ -217,6 +437,7 @@ const Cards = ({ howitworks }) => {
               <button
                 className="btn blue contribute__btn"
                 onClick={() => openModal(10)}
+                disabled={poolStatus[1].contributorsInBatch >= 5}
               >
                 Contribute
               </button>
@@ -227,26 +448,27 @@ const Cards = ({ howitworks }) => {
           <div className="card-2 box card">
             <div className="contribute__heading">
               Tier 2
-              <div className="progress__bar" onClick={() => addStep(2)}>
+              <div className="progress__bar">
                 <div className="progress__num">
-                  {stepTier2 < 5 ? stepTier2 : "Filled"}
+                  {poolStatus[2].contributorsInBatch < 5 ? poolStatus[2].contributorsInBatch : "Filled"}
                 </div>
                 <div
                   className="progress__indicator"
-                  style={{ width: getProgressWidth(stepTier2) }}
+                  style={{ width: getProgressWidth(2) }}
                 ></div>
               </div>
             </div>
             <div className="card__body">
               <div className="currency">USDC</div>
 
+
               {/* <div className="price__value">$200</div> */}
 
               <div className="price__value">$50</div>
-
               <button
                 className="btn blue contribute__btn"
                 onClick={() => openModal(50)}
+                disabled={poolStatus[2].contributorsInBatch >= 5}
               >
                 Contribute
               </button>
@@ -257,13 +479,13 @@ const Cards = ({ howitworks }) => {
           <div className="card-3 box card">
             <div className="contribute__heading">
               Tier 3
-              <div className="progress__bar" onClick={() => addStep(3)}>
+              <div className="progress__bar">
                 <div className="progress__num">
-                  {stepTier3 < 5 ? stepTier3 : "Filled"}
+                  {poolStatus[3].contributorsInBatch < 5 ? poolStatus[3].contributorsInBatch : "Filled"}
                 </div>
                 <div
                   className="progress__indicator"
-                  style={{ width: getProgressWidth(stepTier3) }}
+                  style={{ width: getProgressWidth(3) }}
                 ></div>
               </div>
             </div>
@@ -273,6 +495,7 @@ const Cards = ({ howitworks }) => {
               <button
                 className="btn blue contribute__btn"
                 onClick={() => openModal(500)}
+                disabled={poolStatus[3].contributorsInBatch >= 5}
               >
                 Contribute
               </button>
