@@ -3,15 +3,13 @@ import "../css-files/landingPage.css";
 import "../css-files/headerandfooter.css";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import { Link } from "react-router-dom";
-import { usePrivy } from '@privy-io/react-auth';
-
+import { usePrivy } from "@privy-io/react-auth";
 
 export const Header = () => {
   const [selectedSections, setSelectedSections] = useState(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [disconnectModalOpen, setDisconnectModalOpen] = useState(false);
   const { login, authenticated, user, logout } = usePrivy();
-
 
   const toggleWalletModal = () => {
     if (!authenticated) {
@@ -75,17 +73,19 @@ export const Header = () => {
             <img src="2paylogo.png" alt="2Pay Logo" />
           </a>
         </div>
-
         <div className="hamburger" onClick={toggleMobileMenu}>
           <span className="bar"></span>
           <span className="bar"></span>
           <span className="bar"></span>
         </div>
-
-
-        <div className={`header__sections ${isMobileMenuOpen ? "mobile-open" : ""}`}>
+        <div
+          className={`header__sections ${
+            isMobileMenuOpen ? "mobile-open" : ""
+          }`}
+        >
           {["home", "tiers", "how-it-works", "contribute", "faqs"].map(
-            (section) => (              <a
+            (section) => (
+              <a
                 key={section}
                 href={`#${section}`}
                 onClick={(e) => {
@@ -94,11 +94,12 @@ export const Header = () => {
                   if (element) {
                     const headerOffset = 100;
                     const elementPosition = element.getBoundingClientRect().top;
-                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-                    
+                    const offsetPosition =
+                      elementPosition + window.pageYOffset - headerOffset;
+
                     window.scrollTo({
                       top: offsetPosition,
-                      behavior: "smooth"
+                      behavior: "smooth",
                     });
                   }
                   setSelectedSections(section);
@@ -113,32 +114,43 @@ export const Header = () => {
                     section.slice(1).replace(/-/g, " ")}
                 </h3>
               </a>
-            )          )}
-          
+            )
+          )}
+
           {/* Mobile Wallet Button */}
           <div className="mobile-wallet-button">
             <button className="btn blue" onClick={toggleWalletModal}>
-              {(authenticated && user?.wallet?.address && 
-                (user.wallet.address.slice(0, 6) + "..." + user.wallet.address.slice(-4))) || 
+              {(authenticated &&
+                user?.wallet?.address &&
+                user.wallet.address.slice(0, 6) +
+                  "..." +
+                  user.wallet.address.slice(-4)) ||
                 "Connect Wallet"}
             </button>
           </div>
         </div>
-
-        {/* Wallet utils - always visible on desktop */}        {/* Desktop Wallet Button */}
+        {/* Wallet utils - always visible on desktop */}{" "}
+        {/* Desktop Wallet Button */}
         {!isMobileMenuOpen && (
           <div className="utils desktop-only">
             <div className="selected-wallet">
               {authenticated && <img src="/wallets/base logo 1.png" alt="" />}
             </div>
             <button className="btn blue" onClick={toggleWalletModal}>
-              {(authenticated && user?.wallet?.address && 
-                (user.wallet.address.slice(0, 6) + "..." + user.wallet.address.slice(-4))) || 
+              {(authenticated &&
+                user?.wallet?.address &&
+                user.wallet.address.slice(0, 6) +
+                  "..." +
+                  user.wallet.address.slice(-4)) ||
                 "Connect Wallet"}
             </button>
-            
+
             {authenticated && (
-              <div className={`discnt-wlt-modal ${disconnectModalOpen ? "openmodal" : ""}`}>
+              <div
+                className={`discnt-wlt-modal ${
+                  disconnectModalOpen ? "openmodal" : ""
+                }`}
+              >
                 <ExitToAppIcon />
                 <span onClick={handleDisconnect}>Disconnect Wallet</span>
               </div>
