@@ -28,9 +28,8 @@ const Cards = ({ howitworks }) => {
         setWalletAddress(user.wallet.address);
         // Always fetch a new token after wallet connect
         try {
-          console.log('Fetching nonce for address:', user.wallet.address);
-          // Get nonce from backend
-          const nonceRes = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:3000/api'}/auth/nonce`, { address: user.wallet.address });
+          console.log('Fetching nonce for address:', user.wallet.address);          // Get nonce from backend
+          const nonceRes = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:3000'}/auth/nonce`, { address: user.wallet.address });
           const nonce = nonceRes.data.nonce;
           console.log('Nonce received:', nonce);
           // Detect wallet type and get signer
@@ -45,9 +44,8 @@ const Cards = ({ howitworks }) => {
             throw new Error('No compatible wallet provider found.');
           }
           const signature = await signer.signMessage(nonce);
-          console.log('Signature:', signature);
-          // Send signature to backend to get JWT
-          const loginRes = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:3000/api'}/auth/login`, {
+          console.log('Signature:', signature);          // Send signature to backend to get JWT
+          const loginRes = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:3000'}/auth/login`, {
             address: user.wallet.address,
             signature
           });
