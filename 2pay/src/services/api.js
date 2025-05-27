@@ -21,17 +21,17 @@ api.interceptors.request.use((config) => {
 
 export const poolService = {
   async getPoolStatus(tier) {
-    const response = await api.get(`/pools/${tier}`);
+    const response = await api.get(`/api/pools/${tier}`);
     return response.data;
   },
 
   async getPayoutQueue(tier) {
-    const response = await api.get(`/pools/${tier}/queue`);
+    const response = await api.get(`/api/pools/${tier}/queue`);
     return response.data;
   },
 
   async registerContribution(tier, txHash) {
-    const response = await api.post('/contribute', { tier, txHash });
+    const response = await api.post('/api/contribute', { tier, txHash });
     return response.data;
   }
 };
