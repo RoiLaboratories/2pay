@@ -7,6 +7,8 @@ import { poolService } from '../services/api';
 import { usePrivy } from '@privy-io/react-auth';
 import { ethers, parseUnits } from 'ethers';
 import axios from 'axios';
+import { getChainParameters, getContractAddresses } from '../config/network';
+
 const Cards = ({ howitworks }) => {
   const [poolStatus, setPoolStatus] = useState({
     1: { currentBatch: 0, contributorsInBatch: 0, nextPayoutIndex: 0 },
@@ -108,46 +110,27 @@ const Cards = ({ howitworks }) => {
     setModalOpen(true);
     setTransactionState("idle");
   };
-
   const resetModal = () => {
     setModalOpen(false);
     setSelectedPrice(null);
-    setTransactionState("idle");
-  };
-
-  const BASE_SEPOLIA_CHAIN_ID = '0x14A34'; // 84532 in hex
-  // Get network configuration from environment
-  const CHAIN_ID = `0x${Number(import.meta.env.VITE_CHAIN_ID).toString(16)}`; // Convert to hex
-  const NETWORK_NAME = import.meta.env.VITE_NETWORK_NAME;
-  const RPC_URL = NETWORK_NAME === 'base-sepolia' 
-    ? 'https://sepolia.base.org' 
-    : 'https://mainnet.base.org';
-  const EXPLORER_URL = NETWORK_NAME === 'base-sepolia'
-    ? 'https://sepolia.basescan.org'
-    : 'https://basescan.org';
+    setTransactionState("idle");  };
 
   async function ensureCorrectNetwork() {
     if (window.ethereum) {
-      const chainId = await window.ethereum.request({ method: 'eth_chainId' });
-      if (chainId !== CHAIN_ID) {
+      const chainParams = getChainParameters();
+      const currentChainId = await window.ethereum.request({ method: 'eth_chainId' });
+      if (currentChainId !== chainParams.chainId) {
         try {
           await window.ethereum.request({
             method: 'wallet_switchEthereumChain',
-            params: [{ chainId: CHAIN_ID }],
+            params: [{ chainId: chainParams.chainId }],
           });
           return true;
         } catch (switchError) {
           // If the network is not added, prompt to add it
           if (switchError.code === 4902) {
-            await window.ethereum.request({
-              method: 'wallet_addEthereumChain',
-              params: [{
-                chainId: CHAIN_ID,
-                chainName: NETWORK_NAME === 'base-sepolia' ? 'Base Sepolia' : 'Base',
-                rpcUrls: [RPC_URL],
-                nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
-                blockExplorerUrls: [EXPLORER_URL],
-              }],
+            await window.ethereum.request({            method: 'wallet_addEthereumChain',
+              params: [chainParams],
             });
             return true;
           }
@@ -166,8 +149,9 @@ const Cards = ({ howitworks }) => {
       return;
     }
     setTransactionState("loading");
-    try {      const switched = await ensureCorrectNetwork();
-      if (!switched) throw new Error(`Please connect to ${NETWORK_NAME} network.`);
+    try {      const networkParams = getChainParameters();
+      const switched = await ensureCorrectNetwork();      
+      if (!switched) throw new Error(`Please connect to ${networkParams.chainName} network.`);
       if (!authenticated || !user?.wallet?.address) throw new Error('Wallet not connected');
       // Detect wallet type and get signer
       let provider, signer;
@@ -178,9 +162,9 @@ const Cards = ({ howitworks }) => {
         provider = await user.wallet.getEthersProvider();
         signer = provider.getSigner();
       } else {
-        throw new Error('No compatible wallet provider found.');
-      }      const USDC_ADDRESS = import.meta.env.VITE_USDC_ADDRESS;
-      const TWO_PAY_ADDRESS = import.meta.env.VITE_TWO_PAY_CONTRACT_ADDRESS;
+        throw new Error('No compatible wallet provider found.');      }      
+      // Get contract addresses from network config
+      const { USDC: USDC_ADDRESS, TwoPay: TWO_PAY_ADDRESS } = getContractAddresses();
 
       // Debug logging for addresses
       console.log('Using addresses:', {
