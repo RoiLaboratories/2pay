@@ -267,6 +267,20 @@ h6 {
   footer img {
     height: 10px;
   }
+
+  footer {
+    display: flex;
+    flex-direction: column;
+  }
+
+  footer div {
+    font-size: 12px;
+  }
+
+  .socials {
+    position: static;
+    gap: 10px;
+  }
 }
 
 .utils {

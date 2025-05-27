@@ -98,6 +98,10 @@
     max-width: 100%;
     /* gap: 30px; */
     order: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 
   .hero__text {
@@ -110,7 +114,7 @@
   .hero__text--blue {
     font-size: 28px;
     text-align: center;
-    text-wrap: nowrap;
+    /* text-wrap: nowrap; */
   }
 
   /* .hero__text--p {
